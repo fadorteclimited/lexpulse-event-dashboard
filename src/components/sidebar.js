@@ -19,7 +19,7 @@ export default function Sidebar() {
         }}
 
         >
-            <Navbar.Brand><img src={Logo} alt={'logo'} height={40}/>Lexpulse</Navbar.Brand>
+            <Navbar.Brand className={'ff-montserrat'}><img src={Logo} alt={'logo'} height={40}/>Lexpulse</Navbar.Brand>
             <Nav className={'d-flex flex-column nav-pills w-100 mt-3 justify-content-around mx-0'}>
                 <NavItem className={'me-3'}>
                     <LinkContainer to={'/'}>

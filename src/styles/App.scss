@@ -3,11 +3,13 @@
 //@import "quartz";
 //@import "lux";
 @import "zephyr";
-
+@import "./fonts/webfonts/Montserrat-Alt1.css";
 
 
 /* change the colors */
 $secondary: $white;
+
+
 //$border-color: #262626;
 
 //$dark: #171515;
@@ -137,16 +139,12 @@ main {
 }
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
 }
 .loader-container {
     width: 100%;
@@ -164,6 +162,9 @@ code {
 }
 .ar-16 {
     aspect-ratio: 16/9;
+}
+.ff-montserrat {
+    font-family: 'Montserrat-Alt1', serif;
 }
 
 .spinner {
