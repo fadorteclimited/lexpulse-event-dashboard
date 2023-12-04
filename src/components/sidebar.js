@@ -12,9 +12,8 @@ export default function Sidebar() {
 
 
     return (<div className={'h-100'}>
-
         <Navbar variant={'dark'} bg={'dark'} sticky={"top"} expanded className="d-flex flex-column sidebar"
-                activeKey="/home" style={{
+                 style={{
             height: '100vh'
         }}
 

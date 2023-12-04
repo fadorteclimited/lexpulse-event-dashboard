@@ -10,11 +10,11 @@ function App() {
     <BrowserRouter className="App text-primary">
         <Container fluid >
             <Row>
-                <Col md={'2'} className={'p-0 m-0'}>
+                <Col  lg={'2'} className={'p-0 m-0 desktopOnly'}>
                     <Sidebar/>
                 </Col>
-                <Col md={'10'} className={'p-0 m-0'}>
-                    <Container fluid className={'ps-0 bg-body-secondary'}>
+                <Col md={'auto'} lg={'10'} className={'p-0 m-0'}>
+                    <Container fluid className={'p-0 bg-body-secondary'}>
                         <Header/>
                         <Routes>
                             <Route path={'/'} element={<HomeScreen/>}/>

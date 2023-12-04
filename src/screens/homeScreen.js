@@ -3,11 +3,11 @@ import {Button, Col, Container, Row} from "react-bootstrap";
 import TrendChart from "../components/trendChart";
 import Poster from "../components/poster";
 import {Events} from "../podo/events";
-import {IoCardOutline, IoCartOutline} from "react-icons/io5";
+import {IoCardOutline, IoCartOutline, IoPeople, IoTicket} from "react-icons/io5";
 
 export function HomeScreenItem({title, subtitle, icon}) {
-    return (<Container fluid className={'rounded-3 bg-body-tertiary p-3 d-flex justify-content-between'}>
-        <div className={'rounded-3 bg-primary p-3 me-1 text-white ar-square h-100 text-center'}>
+    return (<Container fluid className={'rounded-3 bg-body-tertiary p-3 d-lg-flex '}>
+        <div className={'rounded-3 bg-primary p-3 me-2 text-white ar-square h-100 text-center'}>
             {icon}
         </div>
         <div>
@@ -23,22 +23,38 @@ export default function HomeScreen() {
         setEvents(Events())
 
     }, [])
-    return (<Container fluid className={'py-3'}>
+    return (<Container fluid className={''}>
         <Row>
-            <Col md={'9'} className={''}>
+            <Col md={'9'} className={'mt-3'}>
                 <Container fluid className={'rounded-4 bg-body-tertiary p-3  overflow-hidden '}>
                     <h2>Earnings</h2>
-                    <div style={{
-                        height: '300px'
-                    }}><TrendChart/></div>
+                    <div className={'w-100 ar-chart '}><TrendChart/></div>
                 </Container>
             </Col>
-            <Col md={'3'} className={'justify-content-around d-flex flex-column'}>
-                <HomeScreenItem title={'Your Balance'} subtitle={'$15,000'}
-                                icon={<IoCardOutline className={'h-100 w-100'}/>}/>
+            <Col lg={'3'} className={'justify-content-between d-flex flex-column mt-3'}>
+                <Container fluid className={'p-0 mh-100'}>
+                    <Row lg={'1'} md={'2'} className={'gy-3'}>
+                        <Col className={'h-100'}><HomeScreenItem title={'Your Balance'}
+                                                                                              subtitle={'$15,000'}
+                                                                                              icon={<IoCardOutline
+                                                                                                  className={'h-100 w-100'}/>}/></Col>
+                        <Col className={'h-100'} ><HomeScreenItem title={'Today\'s Sales'}
+                                                                                              subtitle={'$2,000'}
+                                                                                              icon={<IoCartOutline
+                                                                                                  className={'h-100 w-100'}/>}/></Col>
+                        <Col className={'h-100'}><HomeScreenItem title={'Tickets Sold'}
+                                                                                              subtitle={'147'}
+                                                                                              icon={<IoTicket
+                                                                                                  className={'h-100 w-100'}/>}/>
+                        </Col>
+                        <Col className={'h-100'} > <HomeScreenItem title={'Visitors'}
+                                                                                               subtitle={'312'}
+                                                                                               icon={<IoPeople
+                                                                                                   className={'h-100 w-100'}/>}/>
+                        </Col>
 
-                <HomeScreenItem title={'Today\'s Sales'} subtitle={'$2,000'}
-                                icon={<IoCartOutline className={'h-100 w-100'}/>}/>
+                    </Row>
+                </Container>
 
             </Col>
         </Row>
@@ -52,5 +68,6 @@ export default function HomeScreen() {
                 {events.map((event) => (<Col md={'4'}><Poster eventDetails={event}/></Col>))}
             </Row>
         </Container>
+
     </Container>)
 }
