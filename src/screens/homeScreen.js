@@ -7,8 +7,20 @@ import {IoCardOutline, IoCartOutline, IoPeople, IoTicket} from "react-icons/io5"
 import {LinkContainer} from "react-router-bootstrap";
 
 export function HomeScreenItem({title, subtitle, icon}) {
-    return (<Container fluid className={'rounded-3 bg-body-tertiary p-3 d-lg-flex '}>
-        <div className={'rounded-3 bg-primary p-3 me-2 text-white ar-square h-100 text-center'}>
+    let temp = (<Container fluid className={'rounded-3 bg-body-tertiary p-3 d-flex justify-content-between'}>
+        <div className={'rounded-3 bg-primary p-3 me-1 text-white ar-square h-100 text-center'}>
+            {icon}
+        </div>
+        <div>
+            <h5><small className={'text-body-secondary fw-bold'}>{title}</small></h5>
+            <p className={'m-0 fw-bolder'}>{subtitle}</p>
+        </div>
+    </Container>)
+    return (<Container fluid className={'rounded-3 bg-body-tertiary p-3 d-lg-flex h-100'}>
+        <div className={'rounded-3 bg-primary p-3 me-1 text-white ar-square h-100 text-center desktopOnly'}>
+            {icon}
+        </div>
+        <div className={'rounded-3 bg-primary p-3 me-1 text-white ar-square text-center mobileOnly'}>
             {icon}
         </div>
         <div>
@@ -33,22 +45,22 @@ export default function HomeScreen() {
                 </Container>
             </Col>
             <Col lg={'3'} className={'justify-content-between d-flex flex-column mt-3'}>
-                <Container fluid className={'p-0 mh-100'}>
+            <Container fluid className={'p-0 mh-100'}>
                     <Row lg={'1'} md={'2'} className={'gy-3'}>
-                        <Col className={'h-100'}><HomeScreenItem title={'Your Balance'}
+                        <Col className={'d-lg-flex'} ><HomeScreenItem title={'Your Balance'}
                                                                                               subtitle={'$15,000'}
                                                                                               icon={<IoCardOutline
                                                                                                   className={'h-100 w-100'}/>}/></Col>
-                        <Col className={'h-100'} ><HomeScreenItem title={'Today\'s Sales'}
+                        <Col className={'d-lg-flex'} ><HomeScreenItem title={'Today\'s Sales'}
                                                                                               subtitle={'$2,000'}
                                                                                               icon={<IoCartOutline
                                                                                                   className={'h-100 w-100'}/>}/></Col>
-                        <Col className={'h-100'}><HomeScreenItem title={'Tickets Sold'}
+                        <Col className={'d-lg-flex'}><HomeScreenItem title={'Tickets Sold'}
                                                                                               subtitle={'147'}
                                                                                               icon={<IoTicket
                                                                                                   className={'h-100 w-100'}/>}/>
                         </Col>
-                        <Col className={'h-100'} > <HomeScreenItem title={'Visitors'}
+                        <Col className={'d-lg-flex'} > <HomeScreenItem title={'Visitors'}
                                                                                                subtitle={'312'}
                                                                                                icon={<IoPeople
                                                                                                    className={'h-100 w-100'}/>}/>

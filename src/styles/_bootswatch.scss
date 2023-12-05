@@ -1,10 +1,10 @@
-// Lux 5.2.0
+// Lux 5.3.2
 // Bootswatch
 
 
 // Variables
 
-$web-font-path: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&display=swap" !default;
+$web-font-path: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;500;600;700&display=swap" !default;
 @if $web-font-path {
   @import url($web-font-path);
 }
@@ -65,15 +65,15 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;6
 }
 
 .btn-outline-secondary {
-  color: $secondary;
-  border-color: $secondary;
+  color: $gray-600;
+  border-color: $gray-600;
 
   &:not([disabled]):not(.disabled):hover,
   &:not([disabled]):not(.disabled):focus,
   &:not([disabled]):not(.disabled):active {
     color: $white;
-    background-color: $secondary;
-    border-color: $secondary;
+    background-color: $gray-400;
+    border-color: $gray-400;
   }
 
   &:not([disabled]):not(.disabled):focus {
@@ -86,13 +86,12 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;6
 }
 
 .border-secondary {
-  border: 1px solid $secondary !important;
+  border: 1px solid $gray-400 !important;
 }
 
 // Typography
 
 body {
-  font-weight: 200;
   letter-spacing: 1px;
 }
 
@@ -107,7 +106,7 @@ h6 {
 }
 
 .text-secondary {
-  color: $secondary !important;
+  color: $body-color !important;
 }
 
 // Tables
