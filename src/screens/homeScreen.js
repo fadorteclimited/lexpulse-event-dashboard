@@ -4,6 +4,7 @@ import TrendChart from "../components/trendChart";
 import Poster from "../components/poster";
 import {Events} from "../podo/events";
 import {IoCardOutline, IoCartOutline, IoPeople, IoTicket} from "react-icons/io5";
+import {LinkContainer} from "react-router-bootstrap";
 
 export function HomeScreenItem({title, subtitle, icon}) {
     return (<Container fluid className={'rounded-3 bg-body-tertiary p-3 d-lg-flex '}>
@@ -62,7 +63,10 @@ export default function HomeScreen() {
         <Container fluid className={' my-3 py-3 bg-body rounded-4 text-primary'}>
             <div className={'d-flex flex-row justify-content-between px-2 mb-3'}>
                 <h2>Your Events</h2>
-                <Button variant={'outline-primary'}>Create New Event</Button>
+                <LinkContainer to={'/events/new'}>
+                    <Button variant={'outline-primary'}>Create New Event</Button>
+                </LinkContainer>
+
             </div>
             <Row className={'gy-3'}>
                 {events.map((event) => (<Col md={'4'}><Poster eventDetails={event}/></Col>))}

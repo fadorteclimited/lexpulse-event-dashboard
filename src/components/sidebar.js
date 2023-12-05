@@ -43,6 +43,7 @@ export default function Sidebar() {
                     <NavLink><IoLogOutOutline size={28}/> Logout</NavLink>
                 </NavItem>
             </Nav>
+
         </Navbar>
 
     </div>);

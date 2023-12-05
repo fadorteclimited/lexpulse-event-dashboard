@@ -4,6 +4,8 @@ import Sidebar from "./components/sidebar";
 import {Col, Container, Row} from "react-bootstrap";
 import HomeScreen from "./screens/homeScreen";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Payouts from "./screens/payouts";
+import NewEvent from "./screens/newEvent";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
                         <Header/>
                         <Routes>
                             <Route path={'/'} element={<HomeScreen/>}/>
+                            <Route path={'/payouts'} element={<Payouts/>}/>
+                            <Route path={'/events/new'} element={<NewEvent/>}/>
                         </Routes>
 
                     </Container>
