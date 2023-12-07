@@ -40,7 +40,7 @@ export default function TrendChart() {
     },], [])
 
     const getSeriesStyle = React.useCallback((series) => {
-        console.log(series.color)
+      series.color = '#584cf4';
         return {
             fill: '#584cf4',
             stroke: '#584cf4'

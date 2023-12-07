@@ -7,17 +7,9 @@ import {IoCardOutline, IoCartOutline, IoPeople, IoTicket} from "react-icons/io5"
 import {LinkContainer} from "react-router-bootstrap";
 
 export function HomeScreenItem({title, subtitle, icon}) {
-    let temp = (<Container fluid className={'rounded-3 bg-body-tertiary p-3 d-flex justify-content-between'}>
-        <div className={'rounded-3 bg-primary p-3 me-1 text-white ar-square h-100 text-center'}>
-            {icon}
-        </div>
-        <div>
-            <h5><small className={'text-body-secondary fw-bold'}>{title}</small></h5>
-            <p className={'m-0 fw-bolder'}>{subtitle}</p>
-        </div>
-    </Container>)
+
     return (<Container fluid className={'rounded-3 bg-body-tertiary p-3 d-lg-flex h-100'}>
-        <div className={'rounded-3 bg-primary p-3 me-1 text-white ar-square h-100 text-center desktopOnly'}>
+        <div className={'rounded-3 bg-primary p-3 me-2 text-white ar-square h-100 text-center desktopOnly'}>
             {icon}
         </div>
         <div className={'rounded-3 bg-primary p-3 me-1 text-white ar-square text-center mobileOnly'}>
@@ -40,7 +32,7 @@ export default function HomeScreen() {
         <Row>
             <Col md={'9'} className={'mt-3'}>
                 <Container fluid className={'rounded-4 bg-body-tertiary p-3  overflow-hidden '}>
-                    <h2>Earnings</h2>
+                    <h2 className={'text-primary'}>Earnings</h2>
                     <div className={'w-100 ar-chart '}><TrendChart/></div>
                 </Container>
             </Col>
@@ -81,7 +73,7 @@ export default function HomeScreen() {
 
             </div>
             <Row className={'gy-3'}>
-                {events.map((event) => (<Col md={'4'}><Poster eventDetails={event}/></Col>))}
+                {events.map((event, index) => (<Col key={index} md={'4'}><Poster eventDetails={event}/></Col>))}
             </Row>
         </Container>
 

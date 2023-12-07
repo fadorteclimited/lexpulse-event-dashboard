@@ -6,6 +6,7 @@ import HomeScreen from "./screens/homeScreen";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Payouts from "./screens/payouts";
 import NewEvent from "./screens/newEvent";
+import EventScreen from "./screens/eventScreen";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                             <Route path={'/'} element={<HomeScreen/>}/>
                             <Route path={'/payouts'} element={<Payouts/>}/>
                             <Route path={'/events/new'} element={<NewEvent/>}/>
+                            <Route path={'/events/:id'} element={<EventScreen/>}/>
                         </Routes>
 
                     </Container>

@@ -22,7 +22,7 @@ export default function Poster({eventDetails}) {
             variant = 'primary';
             break;
     }
-    return (<LinkContainer to={'/event/' + eventDetails.id}>
+    return (<LinkContainer to={'/events/' + eventDetails.id}>
         <Card className={'h-100 border-0 rounded-4 bg-body shadow-none' }>
             <Card.Img variant={'top'} src={eventDetails.poster} className={'rounded-4 '} alt={eventDetails.name}/>
 
