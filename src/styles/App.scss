@@ -6,6 +6,8 @@
 @import "./fonts/webfonts/Montserrat-Alt1.css";
 
 
+
+
 /* change the colors */
 $secondary: $white;
 
@@ -24,6 +26,11 @@ $primary: #584cf4;
 //$body-bg: #04003b;
 @import '~bootstrap/scss/bootstrap.scss';
 @import "_bootswatch.scss";
+
+.table {
+    background-color: transparent;
+    --bs-table-bg: transparent;
+}
 .common-bg{
     background-color: $body-bg;
 }
@@ -135,7 +142,7 @@ main {
 
 .blendText{
 
-    mix-blend-mode: difference;
+    mix-blend-mode: exclusion;
 }
 body {
     margin: 0;
@@ -143,9 +150,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-code {
 
-}
 .loader-container {
     width: 100%;
     height: 80vh;
@@ -202,6 +207,7 @@ main {
 .desktopOnly{
     display: none;
 }
+
 
 @media only screen and (max-width: 900px) {
     .mobileOnly{

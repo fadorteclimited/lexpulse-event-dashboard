@@ -1,5 +1,124 @@
 import React from "react";
 import {Chart} from "react-charts";
+import ReactApexChart from "react-apexcharts";
+
+const lineChartOptions = {
+    chart: {
+        toolbar: {
+            show: false,
+        },
+    },
+    tooltip: {
+        theme: "dark",
+    },
+    dataLabels: {
+        enabled: false,
+    },
+    stroke: {
+        curve: "smooth",
+    },
+    xaxis: {
+        type: "datetime",
+        categories: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ],
+        labels: {
+            style: {
+                colors: "#c8cfca",
+                fontSize: "12px",
+            },
+        },
+    },
+    yaxis: {
+        labels: {
+            style: {
+                colors: "#c8cfca",
+                fontSize: "12px",
+            },
+        },
+    },
+    legend: {
+        show: false,
+    },
+    grid: {
+        strokeDashArray: 5,
+    },
+    fill: {
+        type: "gradient",
+        gradient: {
+            shade: "light",
+            type: "vertical",
+            shadeIntensity: 0.5,
+            gradientToColors: undefined, // optional, if not defined - uses the shades of same color in series
+            inverseColors: true,
+            opacityFrom: 0.8,
+            opacityTo: 0,
+            stops: [],
+        },
+        colors: ["#584cf4", "#2D3748"],
+    },
+    colors: ["#584cf4", "#2D3748"],
+};
+
+export class LineChart extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            chartData: [],
+            chartOptions: {},
+        };
+    }
+
+    componentDidMount() {
+        this.setState({
+            chartData: [{
+                name: 'Sales per month',
+                data:
+                    [
+                        18,
+                        20,
+                        15,
+                        25,
+                        22,
+                        30,
+                        28,
+                        15,
+                        22,
+                        25,
+                        30,
+                        28,
+                    ],
+            },
+
+            ],
+            chartOptions: lineChartOptions,
+        });
+    }
+
+    render() {
+        return (
+            <ReactApexChart
+                options={this.state.chartOptions}
+                series={this.state.chartData}
+                type="area"
+                width="100%"
+                height="100%"
+            />
+        );
+    }
+}
 
 export default function TrendChart() {
     // const sales = [{month: 'January', count: 10}, {month: 'February', count: 20}, {

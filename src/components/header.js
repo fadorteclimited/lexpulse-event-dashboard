@@ -12,8 +12,9 @@ import {LinkContainer} from "react-router-bootstrap";
 export default function Header() {
 
     return (<Navbar variant={'dark'} bg={'dark'} collapseOnSelect expand={'lg'} className={'sticky-sm-top'}>
+        <LinkContainer to={'/'}>
         <Navbar.Brand className={'mobileOnly ff-montserrat'}><img src={Logo} alt={'logo'}
-                                                                  height={40}/>Lexpulse</Navbar.Brand>
+                                                                  height={40}/>Lexpulse</Navbar.Brand></LinkContainer>
         <NavItem className={'ms-auto mobileOnly me-2'}>
             <Button variant={'dark'}>
                 <IoNotificationsOutline size={18}/>

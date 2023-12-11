@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Button, Col, Container, Row} from "react-bootstrap";
-import TrendChart from "../components/trendChart";
+import TrendChart, {LineChart} from "../components/trendChart";
 import Poster from "../components/poster";
 import {Events} from "../podo/events";
 import {IoCardOutline, IoCartOutline, IoPeople, IoTicket} from "react-icons/io5";
@@ -16,8 +16,8 @@ export function HomeScreenItem({title, subtitle, icon}) {
             {icon}
         </div>
         <div>
-            <h5><small className={'text-body-secondary fw-bold'}>{title}</small></h5>
-            <p className={'m-0 fw-bolder'}>{subtitle}</p>
+            <h6><small className={'text-body-secondary fw-bold'}>{title}</small></h6>
+            <p className={'m-0 fw-bold'}>{subtitle}</p>
         </div>
     </Container>)
 }
@@ -31,14 +31,14 @@ export default function HomeScreen() {
     return (<Container fluid className={''}>
         <Row>
             <Col md={'9'} className={'mt-3'}>
-                <Container fluid className={'rounded-4 bg-body-tertiary p-3  overflow-hidden '}>
+                <Container fluid className={'rounded-4 bg-body-tertiary p-lg-3 p-sm-0 h-100  overflow-hidden'}>
                     <h2 className={'text-primary'}>Earnings</h2>
-                    <div className={'w-100 ar-chart '}><TrendChart/></div>
+                    <div className={'h-100'}><LineChart/></div>
                 </Container>
             </Col>
-            <Col lg={'3'} className={'justify-content-between d-flex flex-column mt-3'}>
-            <Container fluid className={'p-0 mh-100'}>
-                    <Row lg={'1'} md={'2'} className={'gy-3'}>
+            <Col lg={'3'} className={'mt-3'}>
+            <Container fluid className={'p-0 h-100'}>
+                    <Row lg={'1'} md={'2'} className={'gy-3 h-100  justify-content-around'}>
                         <Col className={'d-lg-flex'} ><HomeScreenItem title={'Your Balance'}
                                                                                               subtitle={'$15,000'}
                                                                                               icon={<IoCardOutline
