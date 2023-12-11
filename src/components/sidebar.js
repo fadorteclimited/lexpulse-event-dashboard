@@ -1,7 +1,7 @@
 import {Nav, Navbar, NavItem, NavLink} from "react-bootstrap";
 import Logo from '../logo.png'
 import {
-    IoCash,
+    IoCash, IoCogOutline,
     IoGridOutline,
     IoListOutline,
     IoLogOutOutline
@@ -42,6 +42,9 @@ export default function Sidebar() {
             </Nav>
 
             <Nav className={'mt-auto nav-pills d-flex w-100 justify-content-around flex-column'}>
+                <NavItem>
+                    <NavLink><IoCogOutline size={28}/> Settings</NavLink>
+                </NavItem>
                 <NavItem>
                     <NavLink><IoLogOutOutline size={28}/> Logout</NavLink>
                 </NavItem>
