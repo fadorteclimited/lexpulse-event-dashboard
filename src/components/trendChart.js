@@ -1,6 +1,7 @@
 import React from "react";
 import {Chart} from "react-charts";
 import ReactApexChart from "react-apexcharts";
+import {getRandomInt} from "../podo/utils";
 
 const lineChartOptions = {
     chart: {
@@ -82,24 +83,14 @@ export class LineChart extends React.Component {
     }
 
     componentDidMount() {
+        let data = [];
+        for (let i =0;i < 12; i++){
+            data.push(getRandomInt(2000))
+        }
         this.setState({
             chartData: [{
                 name: 'Sales per month',
-                data:
-                    [
-                        18,
-                        20,
-                        15,
-                        25,
-                        22,
-                        30,
-                        28,
-                        15,
-                        22,
-                        25,
-                        30,
-                        28,
-                    ],
+                data: data,
             },
 
             ],

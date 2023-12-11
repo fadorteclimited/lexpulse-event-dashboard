@@ -3,23 +3,29 @@ import Poster from "../components/poster";
 import React, {useEffect, useState} from "react";
 import {Events} from "../podo/events";
 import {LinkContainer} from "react-router-bootstrap";
+import LoadingScreen from "../components/LoadingScreen";
 
 
 export default function EventsScreen() {
-    const [events, setEvents] = useState(Events);
+    const [events, setEvents] = useState(null);
     useEffect(() => {
         setEvents(Events())
 
     }, [])
-    return (<Container fluid className={'bg-body py-3'}>
+    if (events === null) {
+        return (<LoadingScreen className={'h-100'}/>)
+    } else
+        return (<Container fluid className={'bg-body py-3'}>
         <div className={'d-flex flex-row justify-content-between mb-3'}>
             <h4 className={'text-primary'}>Events</h4>
             <div className={'d-flex'}>
             <DropdownButton title={'Sort'} variant={'outline-primary'} >
                 <Dropdown.Item>Name</Dropdown.Item>
+                <Dropdown.Item>Price</Dropdown.Item>
+                <Dropdown.Item>Date</Dropdown.Item>
             </DropdownButton>
                 <LinkContainer to={'/events/new'}>
-                    <Button variant={'outline-primary'} className={'ms-2'}>Create New Event</Button>
+                    <Button variant={'outline-primary'} className={'ms-2'}>Create</Button>
                 </LinkContainer>
             </div>
         </div>

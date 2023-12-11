@@ -27,13 +27,30 @@ export const Events = () => {
 }
 
 export const getEvent = ({id}) => {
-    let address = faker.address;
+    let address = faker.location;
+
+    let max = getRandomInt(3, 1)
+    let prices = [];
+    let totalTickets = 0;
+    for (let i = 0; i<=max; i++){
+        let count = getRandomInt(400);
+        let sold = getRandomInt(count);
+        totalTickets= totalTickets + sold;
+        prices.push({
+            id: 0,
+            name: faker.company.buzzNoun(),
+            price: parseInt(faker.commerce.price(0,20)),
+            count: count,
+            sold: sold
+        })
+    }
     return   {
         id: id,
         poster: faker.image.urlLoremFlickr({category: 'colorful'}),
         name: faker.company.buzzAdjective(),
         description: faker.lorem.paragraph(),
         status: statuses.at(getRandomInt(statuses.length)),
+        genre: faker.music.genre(),
         venue: {
             id: 0,
             name: faker.company.name(),
@@ -49,12 +66,8 @@ export const getEvent = ({id}) => {
         time: faker.date.soon({days: 5}),
         date: faker.date.soon({days: 5}),
         contact: faker.phone.number() ,
-        options: [
-            {
-                id: 0,
-                name: '',
-                price: parseInt(faker.commerce.price(0,20)),
-            }
-        ]
+        prices: prices,
+        interested: getRandomInt(totalTickets),
+        sold: totalTickets,
     }
 }

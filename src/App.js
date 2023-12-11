@@ -17,17 +17,21 @@ function App() {
                 <Col  lg={'2'} className={'p-0 m-0 desktopOnly'}>
                     <Sidebar/>
                 </Col>
-                <Col md={'auto'} lg={'10'} className={'p-0 m-0'}>
-                    <Container fluid className={'p-0 bg-body-secondary'}>
+                <Col md={'auto'} lg={'10'} className={'p-0 m-0 '}  >
+                    <Container fluid className={'p-0 bg-body-secondary h-100 d-flex flex-column'} style={{
+                        height: '100vh'
+                    }}>
                         <Header/>
-                        <Routes>
-                            <Route path={'/'} element={<HomeScreen/>}/>
-                            <Route path={'/payouts'} element={<Payouts/>}/>
-                            <Route path={'/events/new'} element={<NewEvent/>}/>
-                            <Route path={'/events/:id'} element={<EventScreen/>}/>
-                            <Route path={'/events'} element={<EventsScreen/>}/>
-                        </Routes>
+                        <div className={'fillSpace'}>
+                            <Routes>
+                                <Route path={'/'} element={<HomeScreen/>}/>
+                                <Route path={'/payouts'} element={<Payouts/>}/>
+                                <Route path={'/events/new'} element={<NewEvent/>}/>
+                                <Route path={'/events/:id'} element={<EventScreen/>}/>
+                                <Route path={'/events'} element={<EventsScreen/>}/>
+                            </Routes>
 
+                        </div>
                     </Container>
                 </Col>
             </Row>
