@@ -1,7 +1,6 @@
 import {Button, Col, Container, Row} from "react-bootstrap";
 import {faker} from "@faker-js/faker";
 import {getRandomInt} from "../podo/utils";
-import {IoShareOutline} from "react-icons/io5";
 
 export default function Payouts() {
     let calcBal = getRandomInt(20000,800);
