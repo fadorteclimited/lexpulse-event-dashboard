@@ -170,7 +170,7 @@ body {
     aspect-ratio: 16/9;
 }
 .ar-chart{
-    aspect-ratio: 2.5;
+
 }
 .ff-montserrat {
     font-family: 'Montserrat-Alt1', serif;
@@ -214,10 +214,17 @@ main {
     .mobileOnly{
         display:block;
     }
+    .ar-chart{
+        height: 300px;
+    }
 }
 @media only screen and (min-width: 901px) {
     .desktopOnly{
         display:block;
+    }
+    .ar-chart{
+        aspect-ratio: 3.5;
+        height: 100%;
     }
 }
 

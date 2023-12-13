@@ -39,7 +39,7 @@ export const getEvent = ({id}) => {
         prices.push({
             id: 0,
             name: faker.company.buzzNoun(),
-            price: parseInt(faker.commerce.price(0,20)),
+            price: parseInt(faker.commerce.price({min: 0, max: 20})),
             count: count,
             sold: sold
         })
@@ -70,4 +70,27 @@ export const getEvent = ({id}) => {
         interested: getRandomInt(totalTickets),
         sold: totalTickets,
     }
+}
+
+export const getSoldTickets = (tickets) => {
+
+    let list = [];
+    for (let j = 0; j<tickets.length; j++){
+        let ticket = tickets.at(j)
+        for (let i = 0; i < ticket.sold; i++){
+            list.push(
+                {
+                    name: faker.person.fullName(),
+                    phone: faker.phone.number(),
+                    userId: i,
+                    date: faker.date.past({years: 1}),
+                    option: j,
+                }
+            )
+        }
+    }
+    list.sort(function(a,b){
+        return new Date(b.date) - new Date(a.date);
+    });
+    return list;
 }

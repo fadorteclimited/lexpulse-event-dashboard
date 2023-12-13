@@ -36,7 +36,25 @@ export const monthInt = (month) => {
 }
 
 export const dayStringShort = (num) => {
-    const days = [ "Sun",  "Mon",  "Tue",  "wed",  "thu",  "Fri",  "Sat", ]
+    const days = [ "Sun",  "Mon",  "Tue",  "Wed",  "Thu",  "Fri",  "Sat", ]
     return days[num];
+}
+
+export const dateReader = ({date, month = true, years = true, weekDay = false}) => {
+
+    let _date = new Date(date);
+    let dateString = '';
+    if (weekDay){
+        dateString = dateString.concat(dayStringShort(_date.getDay()), ' ')
+    }
+    dateString = dateString.concat(_date.getDate().toString(), ' ')
+    if (month){
+        dateString =dateString.concat(monthStringShort(_date.getMonth()), ' ')
+    }
+    if (years){
+        dateString = dateString.concat(_date.getFullYear().toString())
+    }
+
+    return dateString;
 }
 

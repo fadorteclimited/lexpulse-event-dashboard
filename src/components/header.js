@@ -2,7 +2,13 @@ import {
     Button, Image, Nav, Navbar, NavbarCollapse, NavbarOffcanvas, NavDropdown, NavItem, NavLink, Offcanvas
 } from "react-bootstrap";
 import {
-    IoCash, IoChatboxEllipsesOutline, IoGridOutline, IoListOutline, IoLogOutOutline, IoNotificationsOutline
+    IoCash,
+    IoChatboxEllipsesOutline,
+    IoCogOutline,
+    IoGridOutline,
+    IoListOutline,
+    IoLogOutOutline,
+    IoNotificationsOutline
 } from "react-icons/io5";
 import {faker} from "@faker-js/faker";
 import Logo from '../logo.png'
@@ -58,7 +64,7 @@ export default function Header() {
                 </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body className={'mobileOnly'}>
-                <Nav className={'ms-auto w-100 h-100'}>
+                <Nav className={'ms-auto d-flex flex-column flex-fill justify-content-between'}>
                     <NavItem className={'me-3'}>
                         <LinkContainer to={'/'}>
                             <NavLink><IoGridOutline size={18}/> Dashboard</NavLink>
@@ -74,12 +80,17 @@ export default function Header() {
                             <NavLink><IoCash size={18}/> Payouts </NavLink>
                         </LinkContainer>
                     </NavItem>
-                </Nav>
-                <Nav className={'mb-auto w-100 '}>
-                    <hr className={''}/>
-                    <NavItem>
-                        <NavLink><IoLogOutOutline size={28}/> Logout</NavLink>
-                    </NavItem>
+                    <div className={'mt-auto'}>
+                        <Nav className={'mt-auto w-100 '}>
+                            <hr className={''}/>
+                            <NavItem>
+                                <NavLink><IoCogOutline size={28}/> Settings</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink><IoLogOutOutline size={28}/> Logout</NavLink>
+                            </NavItem>
+                        </Nav>
+                    </div>
                 </Nav>
             </Offcanvas.Body>
 
