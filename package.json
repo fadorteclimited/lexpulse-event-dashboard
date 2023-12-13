@@ -24,7 +24,8 @@
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "web-vitals": "^2.1.4",
-    "webpack": "^5.89.0"
+    "webpack": "^5.89.0",
+    "@react-buddy/ide-toolbox": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

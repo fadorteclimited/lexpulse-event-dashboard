@@ -46,7 +46,7 @@ export default function Header() {
                     </span>} menuVariant={'dark'} className={'me-0'}>
                         <LinkContainer
                             to={'/account'}><NavDropdown.Item className={''}>Account</NavDropdown.Item></LinkContainer>
-
+                        <LinkContainer to={'/cancel'}><NavDropdown.Item>Cancel Event</NavDropdown.Item></LinkContainer>
                         <LinkContainer to={'/support'}><NavDropdown.Item>
                             Support
                         </NavDropdown.Item></LinkContainer>
@@ -86,9 +86,9 @@ export default function Header() {
                             <NavItem>
                                 <NavLink><IoCogOutline size={28}/> Settings</NavLink>
                             </NavItem>
-                            <NavItem>
+                            <LinkContainer to={'/login'}>
                                 <NavLink><IoLogOutOutline size={28}/> Logout</NavLink>
-                            </NavItem>
+                            </LinkContainer>
                         </Nav>
                     </div>
                 </Nav>

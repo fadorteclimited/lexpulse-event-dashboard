@@ -1,10 +1,7 @@
 import {Nav, Navbar, NavItem, NavLink} from "react-bootstrap";
 import Logo from '../logo.png'
 import {
-    IoCash, IoCogOutline,
-    IoGridOutline,
-    IoListOutline,
-    IoLogOutOutline
+    IoCash, IoCogOutline, IoGridOutline, IoListOutline, IoLogOutOutline
 } from "react-icons/io5";
 import {LinkContainer} from "react-router-bootstrap";
 
@@ -13,13 +10,14 @@ export default function Sidebar() {
 
     return (<div className={'h-100'}>
         <Navbar variant={'dark'} bg={'dark'} sticky={"top"} expanded className="d-flex flex-column sidebar"
-                 style={{
-            height: '100vh'
-        }}
+                style={{
+                    height: '100vh'
+                }}
 
         >
             <LinkContainer to={'/'}>
-                <Navbar.Brand className={'ff-montserrat'}><img src={Logo} alt={'logo'} height={40}/>Lexpulse</Navbar.Brand>
+                <Navbar.Brand className={'ff-montserrat'}><img src={Logo} alt={'logo'}
+                                                               height={40}/>Lexpulse</Navbar.Brand>
 
             </LinkContainer>
             <Nav className={'d-flex flex-column nav-pills w-100 mt-3 justify-content-around mx-0'}>
@@ -45,9 +43,9 @@ export default function Sidebar() {
                 <NavItem>
                     <NavLink><IoCogOutline size={28}/> Settings</NavLink>
                 </NavItem>
-                <NavItem>
+                <LinkContainer to={'/login'}>
                     <NavLink><IoLogOutOutline size={28}/> Logout</NavLink>
-                </NavItem>
+                </LinkContainer>
             </Nav>
 
         </Navbar>
