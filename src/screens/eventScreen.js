@@ -84,6 +84,8 @@ export default function EventScreen() {
                         <Container fluid className={'p-3 rounded-4 bg-body-tertiary mt-3'}>
                             <h5>Location</h5>
                             <span className={'d-flex flex-row justify-content-between'}><small
+                                className={'fw-bold'}>Name: </small>{details.venue.name}</span>
+                            <span className={'d-flex flex-row justify-content-between'}><small
                                 className={'fw-bold'}>Address Line 1: </small>{details.venue.address.line1}</span>
                             <span className={'d-flex flex-row justify-content-between'}><small
                                 className={'fw-bold'}>Address Line 2: </small>{details.venue.address.line2}</span>

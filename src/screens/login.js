@@ -90,9 +90,9 @@ export default function Login() {
             <Modal.Body>{errorMessage}</Modal.Body>
         </Modal>
         <Row>
-            <Col className={'vh-100 verticalCenter text-white'}>
+            <Col className={'vh-100 verticalCenter text-white overflow-y-scroll'}>
                 <LinkContainer to={'/'}>
-                    <span className={'ff-montserrat text-uppercase h3 text-center fw-light'}><img src={Logo} alt={'logo'}
+                    <span className={'mt-3 ff-montserrat text-uppercase h3 text-center fw-light'}><img src={Logo} alt={'logo'}
                                                                               height={80}/>Lexpulse</span></LinkContainer>
                 {(second) ? (<Container className='mt-3'>
                     <Form>
