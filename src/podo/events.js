@@ -94,3 +94,19 @@ export const getSoldTickets = (tickets) => {
     });
     return list;
 }
+
+
+export function getTransactions(num){
+    let list = [];
+    for (let i = 0;i < num; i++){
+        list.push({
+            date: faker.date.past({years: 1}),
+            amount: faker.finance.amount({min: 100, dec: 2, symbol: '$'}),
+            description: faker.company.catchPhrase(),
+        })
+    }
+    list.sort(function(a,b){
+        return new Date(b.date) - new Date(a.date);
+    });
+    return list
+}
