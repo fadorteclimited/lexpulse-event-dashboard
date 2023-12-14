@@ -5,6 +5,7 @@ import {getEvent, getSoldTickets, statuses} from "../podo/events";
 import {IoDocumentOutline, IoEllipsisHorizontalOutline, IoShareOutline} from "react-icons/io5";
 import LoadingScreen from "../components/LoadingScreen";
 import {dateReader} from "../podo/utils";
+import {useNavigate} from "react-router-dom";
 
 
 export default function EventScreen() {
@@ -13,20 +14,27 @@ export default function EventScreen() {
     const [date, setDate] = useState(Date.now());
     const [unsold, setUnsold] = useState(0);
     const [soldTickets, setSoldTickets] = useState([])
+    let history = useNavigate();
     useEffect(() => {
-        let dets = getEvent(parseInt(id));
-        setDetails(dets)
-        setDate(Date(dets.date))
-        let count = 0
-        for (let index in dets.prices) {
-            count += dets.prices.at(index).count
-            setUnsold(count);
+        let list = getEvent(parseInt(id));
+        if (list.length <= 0){
+            history('/events')
+        } else {
+            let dets = list.at(0);
+            setDetails(dets)
+            setDate(Date(dets.date))
+            let count = 0
+            for (let index in dets.prices) {
+                count += dets.prices.at(index).count
+                setUnsold(count);
 
+            }
+
+            setUnsold(count - dets.sold);
+            setSoldTickets(getSoldTickets(dets.prices))
         }
 
-        setUnsold(count - dets.sold);
-        setSoldTickets(getSoldTickets(dets.prices))
-    }, [id])
+    }, [id, history])
     useEffect(() => {
 
 
@@ -53,11 +61,22 @@ export default function EventScreen() {
                 variant = 'primary';
                 break;
         }
+        // const exportData = () => {
+        //     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+        //         JSON.stringify(Events())
+        //     )}`;
+        //     const link = document.createElement("a");
+        //     link.href = jsonString;
+        //     link.download = "data.json";
+        //
+        //     link.click();
+        // };
+
         return (<Container fluid className={'py-3 px-2'}>
             <div className={'d-md-flex flex-row mb-0 px-4'}>
                 <h3 className={'text-primary'}>{details.name}</h3>
                 <div className={'ms-auto'}>
-                    <Button variant={'outline-primary'}>Edit</Button>
+                    <Button variant={'outline-primary'} >Edit</Button>
                     <Button className={'ms-2'} variant={'outline-primary'}><IoShareOutline/> Share</Button>
                     <Button className={'ms-2'} variant={'primary'}>Visit</Button>
                 </div>

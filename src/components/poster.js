@@ -34,7 +34,7 @@ export default function Poster({eventDetails}) {
                         Status: <Badge className={'rounded-pill py-2'} bg={variant}>{eventDetails.status}</Badge>
                     </ListGroup.Item>
                 </ListGroup>
-                <Button className={' rounded-3'} variant={'outline-primary'}>View Event</Button>
+                <Button className={' rounded-3'} variant={'outline-primary'} onClick={() => console.log.bind(this,eventDetails)}>View Event</Button>
             </Card.Body>
         </Card>
     </LinkContainer>);

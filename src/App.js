@@ -1,7 +1,7 @@
-import './styles/App.scss';
+import './App.scss';
 import Header from "./components/header";
 import Sidebar from "./components/sidebar";
-import {Col, Container, Row} from "react-bootstrap";
+import {Breadcrumb,Col, Container, Row} from "react-bootstrap";
 import HomeScreen from "./screens/homeScreen";
 import {BrowserRouter, Route, Routes, useLocation} from "react-router-dom";
 import Payouts from "./screens/payouts";
@@ -10,6 +10,7 @@ import EventScreen from "./screens/eventScreen";
 import EventsScreen from "./screens/eventsScreen";
 import Login from "./screens/login";
 import {useEffect, useState} from "react";
+import {LinkContainer} from "react-router-bootstrap";
 
 
 function App() {
@@ -53,11 +54,15 @@ function Routed() {
                             {!hide && <Header/>}
                             <div className={'fillSpace'}>
                                 <Routes>
+                                    <Route  path={'/events/new'} element={<NewEvent/>}/>
+                                    <Route path={'/events/:id'} element={<EventScreen/>}/>
+                                    <Route path={'/events'} element={<EventsScreen/>}   handle={{
+                                        crumb: () => <LinkContainer to="/events"><Breadcrumb.Item>Events</Breadcrumb.Item></LinkContainer>,}}/>
+                                </Routes>
+                                <Routes>
                                     <Route path={'/'} element={<HomeScreen/>}/>
                                     <Route path={'/payouts'} element={<Payouts/>}/>
-                                    <Route path={'/events/new'} element={<NewEvent/>}/>
-                                    <Route path={'/events/:id'} element={<EventScreen/>}/>
-                                    <Route path={'/events'} element={<EventsScreen/>}/>
+
                                 </Routes>
 
                             </div>

@@ -11,8 +11,9 @@ import {
     IoNotificationsOutline
 } from "react-icons/io5";
 import {faker} from "@faker-js/faker";
-import Logo from '../logo.png'
+import Logo from '../assets/logo.png'
 import {LinkContainer} from "react-router-bootstrap";
+import Breadcrumbs from "./breadcrumbs";
 
 
 export default function Header() {
@@ -26,6 +27,9 @@ export default function Header() {
                 <IoNotificationsOutline size={18}/>
             </Button>
         </NavItem>
+        <div className={'me-auto'}>
+            <Breadcrumbs/>
+        </div>
         <NavbarCollapse className={'desktopOnly'}>
             <Nav className={'ms-auto'}>
                 <NavItem className={'mx-0'} >

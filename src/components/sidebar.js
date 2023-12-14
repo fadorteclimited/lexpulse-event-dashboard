@@ -1,5 +1,5 @@
 import {Nav, Navbar, NavItem, NavLink} from "react-bootstrap";
-import Logo from '../logo.png'
+import Logo from '../assets/logo.png'
 import {
     IoCash, IoCogOutline, IoGridOutline, IoListOutline, IoLogOutOutline
 } from "react-icons/io5";

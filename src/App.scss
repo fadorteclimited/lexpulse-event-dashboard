@@ -1,7 +1,5 @@
-//@import "quartz";
-//@import "lux";
-@import "zephyr";
-@import "./fonts/webfonts/Montserrat-Alt1.css";
+@import "assets/zephyr";
+@import "assets/fonts/webfonts/Montserrat-Alt1.css";
 
 
 
@@ -23,8 +21,10 @@ $primary: #584cf4;
 //$info: aqua;
 
 //$body-bg: #04003b;
-@import '~bootstrap/scss/bootstrap.scss';
-@import "_bootswatch.scss";
+$breadcrumb-divider: quote("/");
+$breadcrumb-active-color: $gray-600;
+@import 'bootstrap';
+@import "assets/bootswatch";
 
 .table {
   background-color: transparent;

@@ -5,7 +5,7 @@ import {
 import {LinkContainer} from 'react-router-bootstrap'
 import LoginImage from '../assets/reshot-0.png'
 import {Link, useNavigate} from 'react-router-dom'
-import Logo from '../logo.png'
+import Logo from '../assets/logo.png'
 import LoadingScreen from "../components/LoadingScreen";
 async function signIn(email, pass) {
 
