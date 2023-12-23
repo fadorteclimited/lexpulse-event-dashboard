@@ -239,7 +239,15 @@ main {
   background-color: hsla(0, 0%, 15%, 0.5);
   /* background-color: #262626; */
 }
+.box-translate-y {
+  transform: translateY(160%);
 
+
+}
+.bg-blur {
+  backdrop-filter: saturate(200%) blur(50px);
+  -webkit-backdrop-filter: saturate(200%) blur(50px);
+}
 .mobileOnly {
   display: none;
 }
@@ -266,6 +274,10 @@ main {
     aspect-ratio: 3.5;
     height: 100%;
   }
+  .box-translate-y {
+    transform: translateY(110%);
+
+  }
 }
 
 @keyframes spin-anim {
@@ -276,5 +288,6 @@ main {
     transform: rotate(360deg);
   }
 }
+
 
 

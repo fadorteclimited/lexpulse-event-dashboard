@@ -69,7 +69,7 @@ export default function Payouts() {
         </Row>
         <Container fluid className={'p-3 rounded-4 bg-body-tertiary mt-5 '}>
             <h5 className={'text-primary text-center'}>Transactions</h5>
-            <Table hover >
+            <Table hover responsive >
                 <thead>
                 <tr>
                     <th scope={'col'}><strong>#</strong></th>

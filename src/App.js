@@ -11,6 +11,7 @@ import EventsScreen from "./screens/eventsScreen";
 import Login from "./screens/login";
 import {useEffect, useState} from "react";
 import {LinkContainer} from "react-router-bootstrap";
+import Profile from "./screens/profile";
 
 
 function App() {
@@ -62,7 +63,7 @@ function Routed() {
                                 <Routes>
                                     <Route path={'/'} element={<HomeScreen/>}/>
                                     <Route path={'/payouts'} element={<Payouts/>}/>
-
+                                    <Route path={'/account'} element={<Profile/>}/>
                                 </Routes>
 
                             </div>

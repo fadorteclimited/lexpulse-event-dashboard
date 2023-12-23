@@ -30,6 +30,7 @@ export default function Login() {
     const [fName, setFName] = useState();
     const [lName, setLName] = useState();
     const [phone, setPhone] = useState();
+    const [cName, setCName] = useState();
 
     let history = useNavigate();
 
@@ -56,7 +57,7 @@ export default function Login() {
 
     async function handleSignUp() {
 
-        if (fName === '' || lName === '' || phone === '' || fName === undefined || lName === undefined || phone === undefined) {
+        if (fName === '' || lName === '' || phone === '' || fName === undefined || lName === undefined || phone === undefined || cName === '' || cName === undefined) {
             setShow(true);
             setErrorMessage('Please fill in all fields')
         } else {
@@ -92,9 +93,9 @@ export default function Login() {
         <Row>
             <Col className={'vh-100 verticalCenter text-white overflow-y-scroll'}>
                 <LinkContainer to={'/'}>
-                    <span className={'mt-3 ff-montserrat text-uppercase h3 text-center fw-light'}><img src={Logo} alt={'logo'}
+                    <span className={'mt-2 ff-montserrat text-uppercase h3 text-center fw-light'}><img src={Logo} alt={'logo'}
                                                                               height={80}/>Lexpulse</span></LinkContainer>
-                {(second) ? (<Container className='mt-3'>
+                {(second) ? (<Container className=''>
                     <Form>
                         <FormGroup>
                             <Row>
@@ -113,6 +114,12 @@ export default function Login() {
                             </Row>
                         </FormGroup>
                         <FormGroup>
+                            <FormLabel className="mt-3">Company Name</FormLabel>
+                            <FormControl className={'form-control-login'} id='companyId' placeholder='Event Brand Name'
+                                         onChange={(e) => setCName(e.target.value)}/>
+                            <FormText className="text-primary">Event Company Name</FormText>
+                        </FormGroup>
+                        <FormGroup>
                             <FormLabel htmlFor="exampleInputEmail1" className="mt-3">Email address</FormLabel>
                             <FormControl type={'email'} className={'form-control-login'} id={'Email1'}
                                          placeholder={'Enter Email'} onChange={(e) => setEmail(e.target.value)}/>
@@ -122,9 +129,10 @@ export default function Login() {
 
                         <FormGroup className={''}>
                             <FormLabel className="mt-3">Phone Number</FormLabel>
-                            <FormControl className={'form-control-login'} id='phoneId' placeholder='Phone Number'
+                            <FormControl type={'tel'} className={'form-control-login'} id='phoneId' placeholder='Phone Number'
                                          onChange={(e) => setPhone(e.target.value)}/>
                             <FormText className="text-primary">Phone Number</FormText>
+
                         </FormGroup>
                         <FormGroup>
                             <FormLabel htmlFor="exampleInputPassword1" className="mt-3">Password</FormLabel>

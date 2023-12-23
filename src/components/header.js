@@ -8,15 +8,22 @@ import {
     IoGridOutline,
     IoListOutline,
     IoLogOutOutline,
-    IoNotificationsOutline
+    IoNotificationsOutline, IoPersonOutline,
 } from "react-icons/io5";
 import {faker} from "@faker-js/faker";
 import Logo from '../assets/logo.png'
 import {LinkContainer} from "react-router-bootstrap";
 import Breadcrumbs from "./breadcrumbs";
+import {getRandomInt} from "../podo/utils";
 
 
 export default function Header() {
+    const navProfile = {
+        id: getRandomInt(300),
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        avatar: faker.image.avatar(),
+    }
 
     return (<Navbar variant={'dark'} bg={'dark'} collapseOnSelect expand={'lg'} className={'sticky-sm-top'}>
         <LinkContainer to={'/'}>
@@ -27,7 +34,7 @@ export default function Header() {
                 <IoNotificationsOutline size={18}/>
             </Button>
         </NavItem>
-        <div className={'me-auto'}>
+        <div className={'me-auto desktopOnly'}>
             <Breadcrumbs/>
         </div>
         <NavbarCollapse className={'desktopOnly'}>
@@ -44,9 +51,9 @@ export default function Header() {
                 </NavItem>
                 <NavItem className={'mx-0 '}>
                     <NavDropdown
-                        title={<span>{faker.person.firstName()} {faker.person.lastName()}
+                        title={<span>{navProfile.firstName} {navProfile.lastName}
                             <Image className={'ms-1 object-fit-cover'} style={{maxHeight: '25px'}}
-                                   src={faker.image.avatar()} alt={'avatar'} roundedCircle/>
+                                   src={navProfile.avatar} alt={'avatar'} roundedCircle/>
                     </span>} menuVariant={'dark'} className={'me-0'}>
                         <LinkContainer
                             to={'/account'}><NavDropdown.Item className={''}>Account</NavDropdown.Item></LinkContainer>
@@ -82,6 +89,11 @@ export default function Header() {
                     <NavItem className={'me-3'}>
                         <LinkContainer to={'/payouts'}>
                             <NavLink><IoCash size={18}/> Payouts </NavLink>
+                        </LinkContainer>
+                    </NavItem>
+                    <NavItem className={'me-3'}>
+                        <LinkContainer to={'/account'}>
+                            <NavLink><IoPersonOutline size={18}/> Account </NavLink>
                         </LinkContainer>
                     </NavItem>
                     <div className={'mt-auto'}>
