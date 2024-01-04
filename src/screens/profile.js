@@ -4,11 +4,15 @@ import {IoLogoTiktok} from "react-icons/io5";
 import {AiOutlineFacebook, AiOutlineInstagram, AiOutlineTwitter} from "react-icons/ai";
 import {getRandomInt} from "../podo/utils";
 import {RxDividerVertical} from "react-icons/rx";
+import {useEffect, useState} from "react";
 
 
 export default function Profile() {
-    let profile = {
-        name: faker.person.fullName(),
+    const [profile,setProfile] = useState({
+        id: getRandomInt(300),
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        image: faker.image.avatar(),
         companyName: faker.company.buzzNoun(),
         dateJoined: faker.date.past({years: 1}),
         cover: faker.image.urlLoremFlickr({category: 'colorful'}),
@@ -16,7 +20,21 @@ export default function Profile() {
         followers: getRandomInt(2000),
         totalEvents: getRandomInt(50),
         description: faker.lorem.sentences(5)
-    }
+    })
+
+    useEffect(() => {
+            let prof = JSON.parse(localStorage.getItem('user'))
+            setProfile({
+                companyName: faker.company.buzzNoun(),
+                dateJoined: faker.date.past({years: 1}),
+                cover: faker.image.urlLoremFlickr({category: 'colorful'}),
+                email: faker.internet.email(),
+                followers: getRandomInt(2000),
+                totalEvents: getRandomInt(50),
+                description: faker.lorem.sentences(5),
+                ...prof
+            })
+    },[])
 
     return (<Container fluid className={'mt-5'}>
         <div className={'rounded-4'} style={{
@@ -34,11 +52,12 @@ export default function Profile() {
                     }}>
                         <Col className={'mt-0'} md={'3'}>
                             <img className={'w-100 object-fit-cover rounded-4 ar-square'}
-                                 src={faker.image.avatar()} alt={'avatar'}/>
+                                 src={profile.image} alt={'avatar'}/>
                         </Col>
                         <Col md={''} className={'py-md-3 mt-0'}>
                            <div><h5 className={'fw-bold text-dark'}>{profile.companyName}</h5>
-                               <p className={'fw-bold text-danger-emphasis'}>{profile.name}</p></div>
+                               <p className={'fw-bold text-primary-emphasis mb-0'}>{profile.firstName + ' ' + profile.lastName}</p>
+                               <p className={'text-primary-emphasis'}>{profile.email}</p></div>
                             <span className={'d-flex flex-row'}>
                                 <Button className={'ps-0'} variant={'link'}><AiOutlineTwitter size={30}/></Button>
                                 <Button variant={'link'}><AiOutlineInstagram size={30}/></Button>

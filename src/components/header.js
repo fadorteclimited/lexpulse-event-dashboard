@@ -15,17 +15,28 @@ import Logo from '../assets/logo.png'
 import {LinkContainer} from "react-router-bootstrap";
 import Breadcrumbs from "./breadcrumbs";
 import {getRandomInt} from "../podo/utils";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 
 export default function Header() {
-    const navProfile = {
+    const [navProfile, setNavProfile] = useState({
         id: getRandomInt(300),
         firstName: faker.person.firstName(),
         lastName: faker.person.lastName(),
-        avatar: faker.image.avatar(),
-    }
+        image: faker.image.avatar(),
+    })
+    let history = useNavigate();
+    useEffect(() => {
+        if (localStorage.getItem('user') === null){
+            history('/login')
+        } else {
+            setNavProfile(JSON.parse(localStorage.getItem('user')))
+        }
 
-    return (<Navbar variant={'dark'} bg={'dark'} collapseOnSelect expand={'lg'} className={'sticky-sm-top'}>
+    },[history])
+
+    return (<Navbar variant={'dark'} bg={'dark'} collapseOnSelect expand={'lg'} className={'sticky-sm-top pb-1'}>
         <LinkContainer to={'/'}>
         <Navbar.Brand className={'mobileOnly ff-montserrat'}><img src={Logo} alt={'logo'}
                                                                   height={40}/>Lexpulse</Navbar.Brand></LinkContainer>
@@ -34,11 +45,15 @@ export default function Header() {
                 <IoNotificationsOutline size={18}/>
             </Button>
         </NavItem>
-        <div className={'me-auto desktopOnly'}>
-            <Breadcrumbs/>
-        </div>
+        <NavItem className={'mx-0'} >
+            <div className={'desktopOnly'}>
+                <Breadcrumbs />
+            </div>
+        </NavItem>
+        {/*<Navbar.Brand className={'ps-2'}>Events</Navbar.Brand>*/}
         <NavbarCollapse className={'desktopOnly'}>
             <Nav className={'ms-auto'}>
+
                 <NavItem className={'mx-0'} >
                     <Button variant={'dark'}>
                         <IoNotificationsOutline size={18}/>
@@ -53,11 +68,10 @@ export default function Header() {
                     <NavDropdown
                         title={<span>{navProfile.firstName} {navProfile.lastName}
                             <Image className={'ms-1 object-fit-cover'} style={{maxHeight: '25px'}}
-                                   src={navProfile.avatar} alt={'avatar'} roundedCircle/>
+                                   src={navProfile.image} alt={'avatar'} roundedCircle/>
                     </span>} menuVariant={'dark'} className={'me-0'}>
                         <LinkContainer
-                            to={'/account'}><NavDropdown.Item className={''}>Account</NavDropdown.Item></LinkContainer>
-                        <LinkContainer to={'/cancel'}><NavDropdown.Item>Cancel Event</NavDropdown.Item></LinkContainer>
+                            to={'/profile'}><NavDropdown.Item className={''}>View Profile</NavDropdown.Item></LinkContainer>
                         <LinkContainer to={'/support'}><NavDropdown.Item>
                             Support
                         </NavDropdown.Item></LinkContainer>

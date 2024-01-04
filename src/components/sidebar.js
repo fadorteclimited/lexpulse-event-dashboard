@@ -1,5 +1,5 @@
 import {Nav, Navbar, NavItem} from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import Logo from '../assets/logo.png'
 import {
     IoCash, IoGridOutline, IoListOutline, IoLogOutOutline
@@ -8,7 +8,7 @@ import {LinkContainer,} from "react-router-bootstrap";
 
 export default function Sidebar() {
 
-
+    let history = useNavigate();
     return (<div className={'h-100'}>
         <Navbar variant={'dark'} bg={'dark'} sticky={"top"} expanded className="d-flex flex-column sidebar"
                 style={{
@@ -28,9 +28,7 @@ export default function Sidebar() {
 
                 </NavItem>
                 <NavItem className={'me-3'}>
-
                         <Nav.Link as={NavLink} exact to={'/events'}><IoListOutline size={18}/> Events</Nav.Link>
-
                 </NavItem>
                 <NavItem className={'me-3'}>
 
@@ -42,9 +40,10 @@ export default function Sidebar() {
 
             <Nav className={'mt-auto nav-pills d-flex w-100 justify-content-around flex-column'}>
 
-
-                    <Nav.Link as={NavLink} exact to={'/login'}><IoLogOutOutline size={28}/> Logout</Nav.Link>
-
+                <Nav.Link onClick={() => {
+                    localStorage.clear();
+                    history('/login');
+                }} className={'text-danger'}><IoLogOutOutline size={28}/> Logout</Nav.Link>
             </Nav>
 
         </Navbar>
