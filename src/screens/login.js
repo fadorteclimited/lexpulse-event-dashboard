@@ -17,6 +17,7 @@ export default function Login() {
     const [errorMessage, setErrorMessage] = useState('0');
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
+    const [pass2, setPass2] = useState('');
     const [fName, setFName] = useState();
     const [lName, setLName] = useState();
 
@@ -45,11 +46,16 @@ export default function Login() {
     }
 
     async function handleSignUp() {
-        if (fName === '' || lName === '' || fName === undefined || lName === undefined) {
+
+        if (fName === '' || lName === '' || fName === undefined || lName === undefined || email === undefined || pass === undefined || email === '' || pass === '') {
             setShow(true);
             setErrorMessage('Please fill in all fields')
         } else {
-            // setLoading(true);
+            if (pass !== pass2){
+                setShow(true);
+                setErrorMessage('Passwords dont match')
+            } else {
+            setLoading(true);
             let successObj = await signUpHost({
                 firstName: fName, lastName: lName, email: email, pass: pass,
             });
@@ -62,6 +68,7 @@ export default function Login() {
                 setShow(true);
                 setErrorMessage(successObj);
             }
+        }
         }
     }
 
@@ -122,8 +129,8 @@ export default function Login() {
                         </FormGroup>
                         <FormGroup>
                             <FormLabel htmlFor="exampleInputPassword2" className="mt-3">Confirm Password</FormLabel>
-                            <FormControl type="password" className="form-control-login" id="passId2"
-                                         placeholder="Confirm Password" onChange={(e) => setPass(e.target.value)}/>
+                            <FormControl isInvalid={pass !== pass2} type="password" className="form-control-login" id="passId2"
+                                         placeholder="Confirm Password" onChange={(e) => setPass2(e.target.value)}/>
                         </FormGroup>
                         <FormGroup className='pt-3'>
                             <Button variant={'primary'} className={'w-100'}
