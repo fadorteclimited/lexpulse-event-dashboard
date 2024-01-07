@@ -189,7 +189,7 @@ body {
   -webkit-align-items: center;
   top: 40vh;
   left: 50%;
-  background: linear-gradient(180deg, $dark, #04003b);
+
 }
 
 .ar-square {
@@ -202,6 +202,9 @@ body {
 
 .ar-chart {
 
+}
+.ar-43{
+  aspect-ratio: 4/3;
 }
 
 .ff-montserrat {

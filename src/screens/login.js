@@ -18,8 +18,8 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [pass2, setPass2] = useState('');
-    const [fName, setFName] = useState();
-    const [lName, setLName] = useState();
+    const [fName, setFName] = useState('');
+    const [lName, setLName] = useState('');
 
 
     let history = useNavigate();

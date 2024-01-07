@@ -41,19 +41,17 @@ function Routed() {
     }, [location.pathname, history])
 
   return (
-        <div className={'h-100'}>
+        <div className={'vh-100'}  >
             <Routes>
                 <Route path={'/login'} element={<Login/>}/>
             </Routes>
             <Container fluid className={' h-100'}>
-                <Row>
-                    <Col  lg={'2'} className={'p-0 m-0 desktopOnly'}>
-                        {!hide && <Sidebar/>}
-                    </Col>
-                    <Col md={'auto'} lg={'10'} className={'p-0 m-0 '}  >
-                        <Container fluid className={'p-0 bg-body-secondary h-100 d-flex flex-column'} style={{
-                            height: '100vh'
-                        }}>
+                <Row className={'h-100'}>
+                    {!hide && <Col lg={'2'} className={'p-0 m-0 desktopOnly'}>
+                         <Sidebar/>
+                    </Col>}
+                    <Col md={'auto'} lg={'10'} className={'p-0 m-0'}  >
+                        <Container fluid className={'p-0 bg-body-secondary d-flex flex-column h-100'}>
                             {!hide && <Header/>}
                             <div className={'fillSpace'}>
                                 <Routes>

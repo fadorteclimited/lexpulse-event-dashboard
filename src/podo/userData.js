@@ -1,5 +1,5 @@
 import axios from "axios";
-import {constants, getCountry} from "./utils";
+import {Constants, getCountry} from "./utils";
 import Logo from '../assets/logo.png'
 export async function getUserDetails() {
 
@@ -41,7 +41,7 @@ export async function signUpHost({firstName, lastName, email, pass}){
     formData.append("userType", "host");
     formData.append("image", image, "profile.jpg");
     let successObj;
-    const res = await axios.post(`${constants.baseUrl}api/v1/users`, formData, config).catch((e) => {
+    const res = await axios.post(`${Constants.baseUrl}api/v1/users`, formData, config).catch((e) => {
         successObj = {
             success: false,
             status: e.response.status,
@@ -71,7 +71,7 @@ export async function SignInHost(email, pass){
         data: raw
     }
     let successObj;
-    const res = await axios.post(`${constants.baseUrl}api/v1/auth`, raw, config).catch((e) => {
+    const res = await axios.post(`${Constants.baseUrl}api/v1/auth`, raw, config).catch((e) => {
 
         successObj = {
             success: false,

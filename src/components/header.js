@@ -40,6 +40,7 @@ export default function Header() {
         <LinkContainer to={'/'}>
         <Navbar.Brand className={'mobileOnly ff-montserrat'}><img src={Logo} alt={'logo'}
                                                                   height={40}/>Lexpulse</Navbar.Brand></LinkContainer>
+
         <NavItem className={'ms-auto mobileOnly me-2'}>
             <Button variant={'dark'}>
                 <IoNotificationsOutline size={18}/>

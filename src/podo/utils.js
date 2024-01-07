@@ -1,7 +1,7 @@
 import axios from "axios";
 import {countries} from "country-data";
 
-export const constants = {
+export const Constants = {
     baseUrl: 'https://api-staging.lexpulse.app/',
 }
 export function getRandomInt(max, min = 0) {
@@ -65,7 +65,12 @@ export const dateReader = ({date, month = true, years = true, weekDay = false}) 
 
 export async function getCountry() {
     let data = await axios.get('https://api.country.is');
-    console.log(countries[data.data.country].name);
+    console.log(data.data.country);
     return countries[data.data.country].name;
+}
+
+export function serviceCountries() {
+    let list = ['KE','GH','UK']
+    return list.map((e) => countries[e])
 }
 

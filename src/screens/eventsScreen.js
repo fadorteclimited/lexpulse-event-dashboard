@@ -1,7 +1,7 @@
 import {Button, Col, Container, Dropdown, DropdownButton, Row} from "react-bootstrap";
 import Poster from "../components/poster";
 import React, {useEffect, useState} from "react";
-import {Events} from "../podo/events";
+import {getEvents} from "../podo/events";
 import {LinkContainer} from "react-router-bootstrap";
 import LoadingScreen from "../components/LoadingScreen";
 
@@ -9,13 +9,17 @@ import LoadingScreen from "../components/LoadingScreen";
 export default function EventsScreen() {
     const [events, setEvents] = useState(null);
     useEffect(() => {
-        setEvents(Events())
-
+        // setEvents(Events())
+        getEvents().then((successObj) => {
+            if (successObj.success){
+                setEvents(successObj.data)
+            }
+        })
     }, [])
     if (events === null) {
         return (<LoadingScreen className={'h-100'}/>)
     } else
-        return (<Container fluid className={'bg-body py-3'}>
+        return (<Container fluid className={'py-3 h-100'}>
         <div className={'d-flex flex-row justify-content-between mb-3'}>
             <h4 className={'text-primary'}>Events</h4>
             <div className={'d-flex'}>

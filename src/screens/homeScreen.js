@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Button, Col, Container, Row} from "react-bootstrap";
 import {LineChart} from "../components/trendChart";
 import Poster from "../components/poster";
-import {Events} from "../podo/events";
+import {getEvents} from "../podo/events";
 import {IoCardOutline, IoCartOutline, IoPeople, IoTicket} from "react-icons/io5";
 import {LinkContainer} from "react-router-bootstrap";
 import LoadingScreen from "../components/LoadingScreen";
@@ -24,8 +24,11 @@ export function HomeScreenItem({title, subtitle, icon}) {
 export default function HomeScreen() {
     const [events, setEvents] = useState(null);
     useEffect(() => {
-        setEvents(Events())
-
+        getEvents().then((successObj) => {
+            if (successObj.success){
+                setEvents(successObj.data)
+            }
+        })
     }, [])
     if (events === null) {
         return (<LoadingScreen className={'h-100'}/>)
@@ -54,15 +57,15 @@ export default function HomeScreen() {
             </Row>
         </Container>
 
-        <Container fluid className={'mt-3 rounded-4 bg-body-tertiary p-md-3 p-sm-0 h-100  overflow-hidden'}>
-            <h2 className={'text-primary'}>Earnings</h2>
+        <Container fluid className={'mt-3 rounded-4 bg-body-tertiary p-md-3 p-sm-0 h-100'}>
+            <h4 className={'text-primary'}>Earnings</h4>
             <div className={'ar-chart'}><LineChart/></div>
         </Container>
 
 
         <Container fluid className={' my-3 py-3 bg-body rounded-4 text-primary'}>
             <div className={'d-flex flex-row justify-content-between px-2 mb-3'}>
-                <h2>Your Events</h2>
+                <h4>Your Events</h4>
                 <LinkContainer to={'/events/new'}>
                     <Button variant={'outline-primary'}>Create New</Button>
                 </LinkContainer>
