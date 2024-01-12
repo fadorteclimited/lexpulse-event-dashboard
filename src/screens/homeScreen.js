@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Button, Col, Container, Row} from "react-bootstrap";
 import {LineChart} from "../components/trendChart";
 import Poster from "../components/poster";
-import {getEvents} from "../podo/events";
 import {IoCardOutline, IoCartOutline, IoPeople, IoTicket} from "react-icons/io5";
 import {LinkContainer} from "react-router-bootstrap";
 import LoadingScreen from "../components/LoadingScreen";
+import {useSelector} from "react-redux";
+import {selectEvents, selectLoadingState} from "../podo/EventsSlice";
 
 export function HomeScreenItem({title, subtitle, icon}) {
 
@@ -22,15 +23,10 @@ export function HomeScreenItem({title, subtitle, icon}) {
 }
 
 export default function HomeScreen() {
-    const [events, setEvents] = useState(null);
-    useEffect(() => {
-        getEvents().then((successObj) => {
-            if (successObj.success){
-                setEvents(successObj.data)
-            }
-        })
-    }, [])
-    if (events === null) {
+
+    const events = useSelector(selectEvents)
+
+    if (useSelector(selectLoadingState)){
         return (<LoadingScreen className={'h-100'}/>)
     } else return (<Container fluid className={''}>
         <Container fluid className={'mt-3'}>

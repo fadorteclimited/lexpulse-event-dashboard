@@ -36,7 +36,7 @@ export default function Profile() {
             })
     },[])
 
-    return (<Container fluid className={'mt-5'}>
+    return (<Container fluid className={'py-3'}>
         <div className={'rounded-4'} style={{
             backgroundImage: `url("${profile.cover}")`,
             backgroundRepeat: "no-repeat",

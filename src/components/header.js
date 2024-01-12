@@ -2,9 +2,7 @@ import {
     Button, Image, Nav, Navbar, NavbarCollapse, NavbarOffcanvas, NavDropdown, NavItem, NavLink, Offcanvas
 } from "react-bootstrap";
 import {
-    IoCash,
     IoChatboxEllipsesOutline,
-    IoCogOutline,
     IoGridOutline,
     IoListOutline,
     IoLogOutOutline,
@@ -36,7 +34,7 @@ export default function Header() {
 
     },[history])
 
-    return (<Navbar variant={'dark'} bg={'dark'} collapseOnSelect expand={'lg'} className={'sticky-sm-top pb-1'}>
+    return (<Navbar variant={'dark'} bg={'dark'} collapseOnSelect expand={'lg'} className={'sticky-top pb-1'} sticky={'top'}>
         <LinkContainer to={'/'}>
         <Navbar.Brand className={'mobileOnly ff-montserrat'}><img src={Logo} alt={'logo'}
                                                                   height={40}/>Lexpulse</Navbar.Brand></LinkContainer>
@@ -101,25 +99,23 @@ export default function Header() {
                             <NavLink><IoListOutline size={18}/> Events</NavLink>
                         </LinkContainer>
                     </NavItem>
+                    {/*<NavItem className={'me-3'}>*/}
+                    {/*    <LinkContainer to={'/payouts'}>*/}
+                    {/*        <NavLink><IoCash size={18}/> Payouts </NavLink>*/}
+                    {/*    </LinkContainer>*/}
+                    {/*</NavItem>*/}
                     <NavItem className={'me-3'}>
-                        <LinkContainer to={'/payouts'}>
-                            <NavLink><IoCash size={18}/> Payouts </NavLink>
-                        </LinkContainer>
-                    </NavItem>
-                    <NavItem className={'me-3'}>
-                        <LinkContainer to={'/account'}>
+                        <LinkContainer to={'/profile'}>
                             <NavLink><IoPersonOutline size={18}/> Account </NavLink>
                         </LinkContainer>
                     </NavItem>
                     <div className={'mt-auto'}>
                         <Nav className={'mt-auto w-100 '}>
                             <hr className={''}/>
-                            <NavItem>
-                                <NavLink><IoCogOutline size={28}/> Settings</NavLink>
-                            </NavItem>
-                            <LinkContainer to={'/login'}>
-                                <NavLink><IoLogOutOutline size={28}/> Logout</NavLink>
-                            </LinkContainer>
+                            <Nav.Link onClick={() => {
+                                localStorage.clear();
+                                history('/login');
+                            }} className={'text-danger'}><IoLogOutOutline size={28}/> Logout</Nav.Link>
                         </Nav>
                     </div>
                 </Nav>

@@ -15,6 +15,7 @@ import {useEffect, useRef, useState} from "react";
 import {handleUpload} from "../podo/events";
 import {serviceCountries} from "../podo/utils";
 import LoadingScreen from "../components/LoadingScreen";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -39,6 +40,7 @@ export default function NewEvent() {
     const [country, setCountry] = useState('');
     const [currencyIndex, setCurrencyIndex] = useState(0);
     const [image, setImage] = useState(null)
+    let history = useNavigate();
 
 
     useEffect(() => {
@@ -107,9 +109,8 @@ export default function NewEvent() {
             date: date.toString(), description: description, image: image, country: country, ticketInfo: prices });
         setLoading(false)
         if (successObj.success) {
-            setShow(true);
-            setErrorMessage(successObj)
-            // history('/events');
+
+            history('/events');
         } else {
             setShow(true);
             setErrorMessage(successObj);

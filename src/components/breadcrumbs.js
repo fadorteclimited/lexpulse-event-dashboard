@@ -2,25 +2,42 @@ import {Breadcrumb} from "react-bootstrap";
 import {useLocation} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
 import {IoHomeOutline} from "react-icons/io5";
+import {useSelector} from "react-redux";
+import {selectFullState} from "../podo/SingleEventSlice";
 
 
 export default function Breadcrumbs() {
     const location = useLocation();
     const pathNames = location.pathname.split("/").filter((x) => x);
+    const full = useSelector(selectFullState)
+    let eventDetails = null
+    if (!full.isLoading){
+        if (!full.hasError || full.value !== null ) {
+            if (full.value.length > 0){
+                eventDetails = full.value.at(0);
+            }
+
+    }
+    }
 
     return (
-        <Breadcrumb >
+        <Breadcrumb>
             {location.pathname === "/" ? null : <LinkContainer to="/"><Breadcrumb.Item className={'p'}><IoHomeOutline/></Breadcrumb.Item></LinkContainer>}
             {pathNames.map((value, index) => {
                 const last = index === pathNames.length - 1;
                 const to = `/${pathNames.slice(0, index + 1).join("/")}`;
-                if (last){
-                    return (
-                        <Breadcrumb.Item active key={to} className={'p'}>{value}</Breadcrumb.Item>
-                    )
+                if (last) {
+                    if (eventDetails !== null && value === eventDetails._id) {
+                        return (
+                            <Breadcrumb.Item active key={to} className={'p'}>{ eventDetails.eventName}</Breadcrumb.Item>)
+                    } else {
+                        return (<Breadcrumb.Item active key={to} className={'p'}>{value}</Breadcrumb.Item>)
+                    }
+
                 } else {
                     return (
-                        <LinkContainer key={index} to={to}><Breadcrumb.Item className={'text-decoration-none'}>{value}</Breadcrumb.Item></LinkContainer>
+                        <LinkContainer key={index} to={to}><Breadcrumb.Item
+                            className={'text-decoration-none'}>{value}</Breadcrumb.Item></LinkContainer>
 
                     )
                 }

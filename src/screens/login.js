@@ -8,6 +8,8 @@ import {Link, useNavigate} from 'react-router-dom'
 import Logo from '../assets/logo.png'
 import LoadingScreen from "../components/LoadingScreen";
 import {SignInHost, signUpHost} from "../podo/userData";
+import {getEvents} from "../podo/EventsSlice";
+import {useDispatch} from "react-redux";
 
 
 export default function Login() {
@@ -20,8 +22,7 @@ export default function Login() {
     const [pass2, setPass2] = useState('');
     const [fName, setFName] = useState('');
     const [lName, setLName] = useState('');
-
-
+    const dispatch = useDispatch();
     let history = useNavigate();
 
     async function handleSignIn() {
@@ -34,7 +35,7 @@ export default function Login() {
             let successObj = await SignInHost(email, pass);
             setLoading(false);
             if (successObj.success) {
-
+                dispatch(getEvents());
                 history('/');
             } else {
                 setShow(true);
@@ -61,8 +62,7 @@ export default function Login() {
             });
             setLoading(false)
             if (successObj.success) {
-                setShow(true);
-                setErrorMessage(successObj)
+                changePage();
                 // history('/');
             } else {
                 setShow(true);
@@ -73,7 +73,7 @@ export default function Login() {
     }
 
     function changePage() {
-        setSecond(true);
+        setSecond(!second);
     }
 
     if (loading) {
@@ -137,7 +137,7 @@ export default function Login() {
                                     onClick={handleSignUp.bind(this)}>Create an Account</Button>
                             <FormText className={'text-white'}>Already have an account? <strong
                                 className={'btn btn-link p-0 m-0'}
-                                onClick={setSecond.bind(this, false)}>Sign
+                                onClick={changePage.bind(this)}>Sign
                                 In</strong></FormText>
                         </FormGroup>
                     </Form>
@@ -169,7 +169,6 @@ export default function Login() {
                                             onClick={changePage.bind(this)}>Sign Up</Button>
                                 </Col>
                             </Row>
-
                         </FormGroup>
                     </Form></Container>}
 
