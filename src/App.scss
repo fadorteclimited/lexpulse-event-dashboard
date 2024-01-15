@@ -103,6 +103,33 @@ color: white;
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+.limitLines-3 {
+  display: -webkit-box;
+  max-lines: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.limitLines-4 {
+  display: -webkit-box;
+  max-lines: 4;
+  -webkit-box-orient: vertical;
+  line-clamp: 4;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+.limitLines-5 {
+  display: -webkit-box;
+  max-lines: 5;
+  -webkit-box-orient: vertical;
+  line-clamp: 5;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
+
+
+
 
 .p {
   display: inline;

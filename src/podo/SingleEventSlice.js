@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 import {Constants} from "./utils";
+import {redirect} from "react-router-dom";
 
 export const getEvent = createAsyncThunk('singleEvent/getEvent',
     async (id,{ rejectWithValue }) => {
@@ -21,7 +22,10 @@ export const getEvent = createAsyncThunk('singleEvent/getEvent',
             return res.data.data;
         } catch (error) {
             console.log(error)
-
+            if (error.response.status === 403){
+                localStorage.clear();
+                redirect('/login');
+            }
             return rejectWithValue({
 
             });

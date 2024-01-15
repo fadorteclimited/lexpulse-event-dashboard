@@ -1,5 +1,5 @@
 import {
-    Button, Image, Nav, Navbar, NavbarCollapse, NavbarOffcanvas, NavDropdown, NavItem, NavLink, Offcanvas
+    Button, Image, Nav, Navbar, NavbarCollapse, NavbarOffcanvas, NavItem, NavLink, Offcanvas
 } from "react-bootstrap";
 import {
     IoChatboxEllipsesOutline,
@@ -15,6 +15,9 @@ import Breadcrumbs from "./breadcrumbs";
 import {getRandomInt} from "../podo/utils";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import Notifications from "./notifications";
+import {useDispatch, useSelector} from "react-redux";
+import {getNotifications, selectFullState} from "../podo/NotificationsSlice";
 
 
 export default function Header() {
@@ -24,15 +27,23 @@ export default function Header() {
         lastName: faker.person.lastName(),
         image: faker.image.avatar(),
     })
+    const [showNotifications, setShowNotifications] = useState(false);
     let history = useNavigate();
+    const notify = useSelector(selectFullState);
+    const dispatch = useDispatch();
     useEffect(() => {
         if (localStorage.getItem('user') === null){
             history('/login')
         } else {
-            setNavProfile(JSON.parse(localStorage.getItem('user')))
+            setNavProfile(JSON.parse(localStorage.getItem('user')));
+            if (!notify.hasError && !notify.hasRun){
+                dispatch(getNotifications());
+            }
         }
 
     },[history])
+
+    const closeNotifications = () => setShowNotifications(false)
 
     return (<Navbar variant={'dark'} bg={'dark'} collapseOnSelect expand={'lg'} className={'sticky-top pb-1'} sticky={'top'}>
         <LinkContainer to={'/'}>
@@ -40,7 +51,7 @@ export default function Header() {
                                                                   height={40}/>Lexpulse</Navbar.Brand></LinkContainer>
 
         <NavItem className={'ms-auto mobileOnly me-2'}>
-            <Button variant={'dark'}>
+            <Button variant={'dark'} onClick={setShowNotifications.bind(this, true)}>
                 <IoNotificationsOutline size={18}/>
             </Button>
         </NavItem>
@@ -50,11 +61,13 @@ export default function Header() {
             </div>
         </NavItem>
         {/*<Navbar.Brand className={'ps-2'}>Events</Navbar.Brand>*/}
+        <Notifications show={showNotifications} handleClose={closeNotifications}/>
+
         <NavbarCollapse className={'desktopOnly'}>
             <Nav className={'ms-auto'}>
 
                 <NavItem className={'mx-0'} >
-                    <Button variant={'dark'}>
+                    <Button variant={'dark'} onClick={setShowNotifications.bind(this, true)}>
                         <IoNotificationsOutline size={18}/>
                     </Button>
                 </NavItem>
@@ -64,24 +77,25 @@ export default function Header() {
                     </Button>
                 </NavItem>
                 <NavItem className={'mx-0 '}>
-                    <NavDropdown
-                        title={<span>{navProfile.firstName} {navProfile.lastName}
-                            <Image className={'ms-1 object-fit-cover'} style={{maxHeight: '25px'}}
-                                   src={navProfile.image} alt={'avatar'} roundedCircle/>
-                    </span>} menuVariant={'dark'} className={'me-0'}>
-                        <LinkContainer
-                            to={'/profile'}><NavDropdown.Item className={''}>View Profile</NavDropdown.Item></LinkContainer>
-                        <LinkContainer to={'/support'}><NavDropdown.Item>
-                            Support
-                        </NavDropdown.Item></LinkContainer>
+                  <LinkContainer to={'/profile'} exact>
+                      <NavLink> <span>{navProfile.firstName} {navProfile.lastName}
+                          <Image className={'ms-1 object-fit-cover'} style={{maxHeight: '25px'}}
+                                 src={navProfile.image} alt={'avatar'} roundedCircle/>
+                    </span></NavLink>
+                  </LinkContainer>
+                    {/*    <LinkContainer*/}
+                    {/*        to={'/profile'}><NavDropdown.Item className={''}>View Profile</NavDropdown.Item></LinkContainer>*/}
+                    {/*    <LinkContainer to={'/support'}><NavDropdown.Item>*/}
+                    {/*        Support*/}
+                    {/*    </NavDropdown.Item></LinkContainer>*/}
 
-                    </NavDropdown>
+                    {/*</NavDropdown>*/}
                 </NavItem>
             </Nav>
         </NavbarCollapse>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`}/>
         <NavbarOffcanvas className={'bg-dark navbar-dark mobileOnly'} placement={'end'}
-                         id={'offcanvasNavbar-expand-lg'}>
+                         id={'offcanvasNavbar-expand-lg'} backdrop={showNotifications}>
             <Offcanvas.Header closeButton closeVariant={'white'}>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
                     <Navbar.Brand className={'mobileOnly ff-montserrat'}><img src={Logo} alt={'logo'} height={40}/>Lexpulse</Navbar.Brand>

@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 import {Constants} from "./utils";
+import {redirect} from "react-router-dom";
 
 export const getEvents = createAsyncThunk('eventsList/getEvents',
     async () => {
@@ -14,10 +15,14 @@ export const getEvents = createAsyncThunk('eventsList/getEvents',
             },
         }
         console.log(user)
-        let res = await axios.get(`${Constants.baseUrl}api/v1/events/user/${user.id}`, config)
+        let res = await axios.get(`${Constants.baseUrl}api/v1/events/user/${user.id}`, config);
         return res.data.data;
     } catch (error) {
-        console.log(error)
+        console.log(error.response.status)
+        if (error.response.status === 403){
+            localStorage.clear();
+            redirect('/login');
+        }
         return [];
     }
 })

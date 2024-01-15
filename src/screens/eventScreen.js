@@ -160,7 +160,7 @@ export default function EventScreen() {
                             </Container>
                             <Container fluid className={'p-3 rounded-4 bg-body-tertiary mt-3'}>
                                 <h5>Description</h5>
-                                <p className={'limitLines-2'}>{details.description}</p>
+                                <p className={'limitLines-4'}>{details.description}</p>
                             </Container>
                             <Container fluid className={' p-3 rounded-4 bg-body-tertiary mt-3'}>
                                 <h5>Tickets</h5>
