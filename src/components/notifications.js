@@ -5,7 +5,7 @@ import {AiOutlineCheckCircle} from "react-icons/ai";
 
 
 export default function Notifications({show, handleClose}) {
-    console.log(show)
+
     const notifications = useSelector(selectNotifications)
     return (<Offcanvas placement={'end'} show={show} onHide={handleClose} className={'bg-dark text-light'}>
         <Offcanvas.Header closeButton closeVariant={'white'}>

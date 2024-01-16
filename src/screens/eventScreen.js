@@ -117,7 +117,7 @@ export default function EventScreen() {
                 </div>
 
                 <Container fluid className={'rounded-2 '}>
-                    <Row  md={'1'} sm={'1'} xs={'1'} className={''}>
+                    <Row  md={'1'} sm={'1'} xs={'1'}>
                         <Col lg={'5'}>
                             <Container fluid className={'mt-3 rounded-4 w-100 ar-square p-0'}>
                                 <img src={details.image.at(0)} alt={details.eventName}

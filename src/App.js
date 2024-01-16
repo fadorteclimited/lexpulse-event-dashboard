@@ -14,6 +14,11 @@ import Profile from "./screens/profile";
 import EditEvent from "./screens/editEvent";
 import {useDispatch, useSelector} from "react-redux";
 import {getEvents, selectFullState} from "./podo/EventsSlice";
+import SignIn from "./screens/login/SignIn";
+import SignUp from "./screens/login/SignUp";
+import ChangePassword from "./screens/login/ChangePassword";
+import VerifyEmail from "./screens/login/VerifyEmail";
+
 
 
 function App() {
@@ -24,7 +29,21 @@ function App() {
 }
 
 function FullLayout() {
+    let history = useNavigate();
+    const dispatch = useDispatch();
+    const full = useSelector(selectFullState);
 
+    useEffect(() => {
+
+        if (localStorage.getItem('user') === null) {
+            history('/login')
+        } else {
+            if (!full.hasError && full.value.length === 0 && !full.hasRun) {
+                dispatch(getEvents());
+                console.log(full)
+            }
+        }
+    }, [history, full, dispatch])
     return (<div className={'vh-100 bg-dark '}>
             <Container fluid className={'h-100'}>
                 <Row className={'h-100'}>
@@ -45,30 +64,14 @@ function FullLayout() {
 }
 
 function Routed() {
-
-    let history = useNavigate();
-    const dispatch = useDispatch();
-    const full = useSelector(selectFullState)
-
-
-
-    useEffect(() => {
-
-        if (localStorage.getItem('user') === null) {
-            history('/login')
-        } else {
-            if (!full.hasError && full.value.length === 0 && !full.hasRun) {
-                dispatch(getEvents());
-                console.log(full)
-            }
-        }
-
-
-    }, [history, full, dispatch])
-
     return (<div className={'vh-100 bg-dark '}>
             <Routes>
-                <Route path={'/login'} element={<Login/>}/>
+                <Route element={<Login/>}>
+                    <Route path={'/signup'} element={<SignUp/>}/>
+                    <Route path={'/login'} element={<SignIn/>}/>
+                    <Route path={'/update-pass'} element={<ChangePassword/>}/>
+                    <Route path={'/verify-email'} element={<VerifyEmail/>}/>
+                </Route>
                 <Route element={<FullLayout/>}>
                     <Route path={'/events/new'} element={<NewEvent/>}/>
                     <Route path={'/events/:id'} element={<EventScreen/>}/>

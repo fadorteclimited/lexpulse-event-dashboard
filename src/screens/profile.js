@@ -20,12 +20,12 @@ function PublicInfo(){
         totalEvents: getRandomInt(50),
         description: faker.lorem.sentences(5)
     }
-    return (<Form className={'mt-2'}>
-        <Form.Group className={'mt-2'}>
+    return (<Form className={'mt-3'}>
+        <Form.Group className={'mt-3'}>
             <Form.Label>Organization</Form.Label>
             <Form.Control className={'form-control-login '} placeholder={'Organization name'}/>
         </Form.Group>
-        <Form.Group className={'mt-2'}>
+        <Form.Group className={'mt-3'}>
             <Form.Label>Avatar</Form.Label>
            <div className={'border-1 border d-flex flex-row rounded-3'}>
                <img src={profile.image} alt={'current'} height={100}/>
@@ -38,25 +38,25 @@ function PublicInfo(){
                </div>
            </div>
         </Form.Group>
-        <Form.Group className={'mt-2'}>
+        <Form.Group className={'mt-3'}>
             <Form.Label>About</Form.Label>
             <Form.Control as={'textarea'} rows={5} className={'form-control-login'} placeholder={'Short description about your organization'}/>
         </Form.Group>
 
-        <p className={'fw-semibold text-body-secondary mt-3 mb-0'}>Links to your social media</p>
+        <p className={'fw-semibold text-body-secondary mt-4 mb-0'}>Links to your social media</p>
         <Form.Group className={'mt-1'}>
             <Form.Label>Twitter handle</Form.Label>
             <Form.Control className={'form-control-login'} placeholder={'username'}/>
         </Form.Group>
-        <Form.Group className={'mt-2'}>
+        <Form.Group className={'mt-3'}>
             <Form.Label>Instagram profile</Form.Label>
             <Form.Control  className={'form-control-login'} placeholder={'username'}/>
         </Form.Group>
-        <Form.Group className={'mt-2'}>
+        <Form.Group className={'mt-3'}>
             <Form.Label>Facebook profile</Form.Label>
             <Form.Control  className={'form-control-login'} placeholder={'username'}/>
         </Form.Group>
-        <Form.Group className={'mt-2'}>
+        <Form.Group className={'mt-3'}>
             <Form.Label>Tiktok profile:</Form.Label>
             <Form.Control className={'form-control-login'} placeholder={'username'}/>
         </Form.Group>
@@ -96,25 +96,24 @@ export default function Profile() {
 
     return (<Container fluid className={'py-3'}>
         <div className={'rounded-4 bg-body-tertiary'}>
-            <div className={'rounded-4'}>
-                <Container fluid className={'rounded-4 px-0'}>
-                    <Row className={'py-4 py-md-3 px-2 rounded-4 gy-2 m-0 h-100'}>
-                        <Col className={'mt-0 py-2'} md={'3'}>
-                            <img className={'w-100 object-fit-cover rounded-4 ar-square bg-dark'}
-                                 src={profile.image} alt={'avatar'}/>
-                        </Col>
-                        <Col md={''} className={'py-md-3 mt-0 justify-content-between d-flex flex-column'}>
-                           <div><h5 className={'fw-bold text-dark'}>{profile.companyName}</h5>
-                               <p className={'fw-bold text-primary-emphasis mb-0'}>{profile.firstName + ' ' + profile.lastName}</p>
-                               <p className={'text-primary-emphasis'}>{profile.email}</p>
-                           </div>
-                            <span className={'d-flex flex-row'}>
+            <Container fluid className={'rounded-4 px-0'}>
+                <Row className={'py-4 py-md-3 px-2 rounded-4 gy-2 m-0 h-100'}>
+                    <Col className={'mt-0 py-2'} md={'3'}>
+                        <img className={'w-100 object-fit-cover rounded-4 ar-square bg-dark'}
+                             src={profile.image} alt={'avatar'}/>
+                    </Col>
+                    <Col md={''} className={'py-md-3 mt-0 justify-content-between d-flex flex-column'}>
+                        <div><h5 className={'fw-bold text-dark'}>{profile.companyName}</h5>
+                            <p className={'fw-bold text-primary-emphasis mb-0'}>{profile.firstName + ' ' + profile.lastName}</p>
+                            <p className={'text-primary-emphasis'}>{profile.email}</p>
+                        </div>
+                        <span className={'d-flex flex-row'}>
                                 <Button className={'ps-0'} variant={'link'}><AiOutlineTwitter size={30}/></Button>
                                 <Button variant={'link'}><AiOutlineInstagram size={30}/></Button>
                                 <Button variant={'link'}><AiOutlineFacebook size={30}/></Button>
                                 <Button variant={'link'}><IoLogoTiktok size={30}/></Button>
                             </span>
-                            <div className={'mt-auto'}>
+                        <div className={'mt-auto'}>
                                 <span className={'d-flex flex-row flex-fill justify-content-between'}>
                                 <h6 className={'text-dark'}>{profile.followers} <small className={'text-body-secondary'}>Followers</small></h6>
                                 <RxDividerVertical size={30}/>
@@ -122,39 +121,31 @@ export default function Profile() {
                                     <RxDividerVertical size={30}/>
                                     <h6 className={'text-dark'}><AiOutlineCalendar size={19}/> 6 <small className={'text-body-secondary'}>months</small></h6>
                             </span>
-                            </div>
+                        </div>
 
-                        </Col>
-                        <Col className={'mt-0'}>
-                            <p className={'text-dark '}>{profile.description}</p>
-                        </Col>
-                        {/*<Col md={'auto'} className={'mt-0'}>*/}
-                        {/*    <Button variant={'outline-primary'}>Edit Profile</Button>*/}
-                        {/*</Col>*/}
-                    </Row>
-                </Container>
-            </div>
+                    </Col>
+                    <Col className={'mt-0'}>
+                        <h6>About</h6>
+                        <p className={'text-dark '}>{profile.description}</p>
+                    </Col>
+                </Row>
+            </Container>
         </div>
         <Container fluid className={'py-3 px-0'}>
             <Row>
                 <Col>
-                    <Container className={'rounded-4 bg-body-tertiary py-3'}>
+                    <Container className={'rounded-4 bg-body-tertiary p-3'}>
                         <h6 className={'fw-bold'}>Public Info</h6>
                         <small>This information will be publicly displayed and visible for all users.</small>
                         <PublicInfo/>
                     </Container>
                 </Col>
                 <Col>
-                    <Container className={'rounded-4 bg-body-tertiary py-3'}>
-                        <h6 className={'fw-bold'}>Profile information </h6>
+                    <Container className={'rounded-4 bg-body-tertiary p-3'}>
+                        <h6 className={'fw-bold'}>Profile Information </h6>
 
                     </Container>
                 </Col>
-                {/*<Col>*/}
-                {/*    <Container className={'rounded-4 bg-body-tertiary py-3'}>*/}
-                {/*        <h6 className={'fw-bold'}>Conversation </h6>*/}
-                {/*    </Container>*/}
-                {/*</Col>*/}
             </Row>
         </Container>
     </Container>)
