@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
-import {Constants} from "./utils";
+import {common} from "./utils";
 import {redirect} from "react-router-dom";
 
 export const getNotifications = createAsyncThunk('notificationList/get',
@@ -15,7 +15,7 @@ export const getNotifications = createAsyncThunk('notificationList/get',
                 },
             }
             console.log(user)
-            let res = await axios.get(`${Constants.baseUrl}api/v1/notifications/user/${user.id}`, config)
+            let res = await axios.get(`${common.baseUrl}api/v1/notifications/user/${user.id}`, config)
             return res.data.data;
         } catch (error) {
             console.log(error)

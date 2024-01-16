@@ -1,7 +1,7 @@
 import {faker} from "@faker-js/faker";
 import data from './events.json'
 import axios from "axios";
-import {Constants} from "./utils";
+import {common} from "./utils";
 
 
 
@@ -129,7 +129,7 @@ export async function getEvents() {
 
     }
     let successObj;
-    let res = await axios.get(`${Constants.baseUrl}api/v1/events/user/${user.id}`,config).catch((e) => {
+    let res = await axios.get(`${common.baseUrl}api/v1/events/user/${user.id}`,config).catch((e) => {
 
         successObj = {
             success: false,
@@ -162,7 +162,7 @@ export async function getEvent(id){
     }
     console.log(id)
     let successObj;
-    let res = await axios.get(`${Constants.baseUrl}api/v1/events/${id}`, config).catch((e) => {
+    let res = await axios.get(`${common.baseUrl}api/v1/events/${id}`, config).catch((e) => {
 
         successObj = {
             success: false,
@@ -213,7 +213,7 @@ export async function handleUpload({name, location, category,currency, date, des
 
     let successObj;
 
-    let res = await axios.post(`${Constants.baseUrl}api/v1/events`, formData, config).catch((e) => {
+    let res = await axios.post(`${common.baseUrl}api/v1/events`, formData, config).catch((e) => {
 
         successObj = {
             success: false,

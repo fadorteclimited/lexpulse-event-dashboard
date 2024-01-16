@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
-import {Constants} from "./utils";
+import {common} from "./utils";
 import {redirect} from "react-router-dom";
 
 export const getEvent = createAsyncThunk('singleEvent/getEvent',
@@ -18,7 +18,7 @@ export const getEvent = createAsyncThunk('singleEvent/getEvent',
             }
 
 
-            let res = await axios.get(`${Constants.baseUrl}api/v1/events/${id}`, config)
+            let res = await axios.get(`${common.baseUrl}api/v1/events/${id}`, config)
             return res.data.data;
         } catch (error) {
             console.log(error)
