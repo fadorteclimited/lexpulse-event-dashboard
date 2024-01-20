@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
-import {selectEmail} from "./LoginSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {selectEmail, setErrorBlock} from "./LoginSlice";
 import {Button, Container, Form, FormControl, FormGroup, FormLabel} from "react-bootstrap";
-import {LoginError} from "./index";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {common} from "../../podo/utils";
@@ -14,15 +13,17 @@ export default function ChangePassword() {
     const [pass2, setPass2] = useState('');
     const [code, setCode] = useState('');
     let history = useNavigate();
-    const [show, setShow] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('0');
+    const dispatch = useDispatch();
+
     useEffect(() => {
         if (email === '' || email === undefined){
             history('/login')
         }
     })
 
-    async function updatePass(){
+    async function updatePass(event){
+        event.preventDefault();
+        event.stopPropagation();
        const res = await axios.post(`${common.baseUrl}api/v1/auth/change-password`,{
            email: email,
            code: code,
@@ -31,8 +32,10 @@ export default function ChangePassword() {
     }).catch(
            (reason) =>{
                console.log(reason);
-               setErrorMessage(reason.response.data.msg);
-               setShow(true);
+               dispatch(setErrorBlock({
+                   show: true,
+                   message: reason.response.data.msg
+               }))
            }
        );
         if (res !== undefined){
@@ -43,8 +46,8 @@ export default function ChangePassword() {
     }
 
     return (<Container>
-        <LoginError show={show} setShow={setShow} errorMessage={errorMessage}/>
-        <Form onSubmit={updatePass.bind(this)}>
+
+        <Form onSubmit={updatePass}>
             <FormGroup>
                 <FormLabel htmlFor="email1" className="mt-0">Email address</FormLabel>
                 <FormControl type={'email'} value={email} readOnly plaintext className={'form-control-login'} id={'email1'}/>

@@ -12,11 +12,13 @@ import {
 import {IoCloseOutline, IoImageOutline} from "react-icons/io5";
 import {LinkContainer} from "react-router-bootstrap";
 import {useEffect, useRef, useState} from "react";
-import {Events, getEvent, getSoldTickets, handleUpload} from "../podo/events";
-import {serviceCountries} from "../podo/utils";
+import {handleUpload} from "../podo/events";
 import LoadingScreen from "../components/LoadingScreen";
 import {useNavigate} from "react-router-dom";
 import {useParams} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+import {getEvent, selectEvent, selectLoadingState, updateId} from "../podo/SingleEventSlice";
+import {getEvents} from "../podo/EventsSlice";
 
 
 
@@ -31,7 +33,6 @@ export default function EditEvent() {
     const [loading, setLoading] = useState(false);
     const inputFile = useRef(null)
     const [errorMessage, setErrorMessage] = useState('0');
-    const service= serviceCountries();
     const [eventName, setEventName] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
@@ -39,48 +40,33 @@ export default function EditEvent() {
     const [currency, setCurrency] = useState('');
     const [date, setDate] = useState('');
     const [country, setCountry] = useState('');
-    const [currencyIndex, setCurrencyIndex] = useState(0);
     const [image, setImage] = useState(null)
     let history = useNavigate();
-
     let {id} = useParams();
-    const [details, setDetails] = useState(null);
-
+    const dispatch = useDispatch();
+    dispatch(updateId(id))
+    const details = useSelector(selectEvent);
+    console.log(id)
     useEffect(() => {
-        const filler = Events().at(0);
-        getEvent(id).then((successObj) => {
-            if (successObj.success){
-                let dets = successObj.data.event;
-                setDetails({
-                    ...filler,
-                    ...dets,
-                })
-                let _date = new Date(dets.eventDate);
+        setEventName(details.eventName)
+        setDescription(details.description)
+        setPoster(details.image)
+        setCountry(details.country)
+        setCurrency(details.currency)
+        setCategory(details.category)
+        setLocation(details.location)
+
+                let _date = new Date(details.eventDate);
                 setDate(_date);
                 let count = 0;
                 let count2 = 0;
-                for (let index in dets.ticketInfo) {
-                    count += dets.ticketInfo.at(index).ticketsLeft
-                    count2 += dets.ticketInfo.at(index).ticketsAvailable
-
+                for (let index in details.ticketInfo) {
+                    count += details.ticketInfo.at(index).ticketsLeft
+                    count2 += details.ticketInfo.at(index).ticketsAvailable
                 }
-
-
-
-                setEventName(dets.eventName)
-                setDescription(dets.description)
-                setImage(dets.image)
-                setCountry(dets.country)
-                setCurrency(dets.currency)
-                setCategory(dets.category)
-                setLocation(dets.location)
-                setDate(dets.date)
-            } else {
-                history('/events')
-            }
-        });
-
-    }, [id, history])
+                setPrices(details.ticketInfo)
+        setDate(_date)
+    }, [details])
 
 
 
@@ -129,21 +115,21 @@ export default function EditEvent() {
         }
     }
 
-    const [status, setStatus] = useState('');
-    let statuses = [
-        'Published', 'Draft', 'Pre-Release'
-    ];
 
     async function upload(event) {
         event.preventDefault();
         event.stopPropagation();
         setLoading(true);
-        let successObj = {
-            success: true,
-        }
+        let successObj = await handleUpload({name: eventName,
+            location: location,
+            category: category,
+            currency: currency,
+            date: date.toString(), description: description, image: image, country: country, ticketInfo: prices, update: true, eventId: id });
         setLoading(false)
         if (successObj.success) {
-
+            dispatch(updateId(id))
+            dispatch(getEvents());
+            dispatch(getEvent(id))
             history('/events');
         } else {
             setShow(true);
@@ -152,13 +138,12 @@ export default function EditEvent() {
     }
 
 
-    if (details === null){
+    if (useSelector(selectLoadingState) || details === null || loading ){
         return (<LoadingScreen/>)
     } else {
         return (<Container fluid>
             <Form onSubmit={upload}>
                 <input className={'d-none'} type='file' id='file' ref={inputFile} onChange={onChangeFile}/>
-
                 <div className={'d-flex justify-content-between pt-3'}>
                     <h4>Edit Event</h4>
                     <span>
@@ -189,61 +174,43 @@ export default function EditEvent() {
                                 <FormLabel>
                                     Event Name
                                 </FormLabel>
-                                <FormControl required placeholder={'Event Name'} onChange={(e) => setEventName(e.target.value)}/>
+                                <FormControl value={eventName} required placeholder={'Event Name'} onChange={(e) => setEventName(e.target.value)}/>
                             </FormGroup>
                             <FormGroup className={'mt-3'}>
                                 <FormLabel>
                                     Description
                                 </FormLabel>
-                                <FormControl as={'textarea'} rows={5} placeholder={'Description'} onChange={(e) => setDescription(e.target.value)}/>
+                                <FormControl value={description} as={'textarea'} rows={5} placeholder={'Description'} onChange={(e) => setDescription(e.target.value)}/>
                             </FormGroup>
                             <FormGroup className={'mt-3'}>
                                 <FormLabel>Date</FormLabel>
-                                <FormControl  required type={'datetime-local'} inputMode={'date'} onChange={(e) => setDate(e.target.value)}/>
-                            </FormGroup>
-                            <FormGroup className={'mt-3'}>
-                                <FormLabel>Country</FormLabel>
-                                <Form.Select value={currencyIndex} onChange={(e) => {setCurrencyIndex(e.target.value); console.log(e.target)}}>
-                                    {service.map((_serve, index) => (<option value={index}>{_serve.name}</option>))}
-                                </Form.Select>
+                                <FormControl value={date} required type={'datetime-local'} inputMode={'date'} onChange={(e) => setDate(e.target.value)}/>
                             </FormGroup>
 
+                        <FormGroup>
+                            <FormLabel>Category</FormLabel>
+                            <FormControl value={category} required placeholder={'Category'} inputMode={'search'}
+                                         enterKeyHint={'go'} onChange={(e) => setCategory(e.target.value)}/>
+                            <FormText>Cant find the category? <small className={'text-primary'}> add new</small>
+                            </FormText>
+                        </FormGroup>
 
-                            <FormGroup className={'mt-3'}>
-                                <FormLabel>Status</FormLabel>
-                                <Form.Select value={status} onChange={(e) => {setStatus(e.target.value)}}>
-                                    {statuses.map((_status) => (<option value={_status}>{_status}</option>))}
-                                </Form.Select>
-                            </FormGroup>
-                            {(status === statuses.at(2))? (<FormGroup className={'mt-1'}>
-                                <FormLabel>Release Date</FormLabel>
-                                <FormControl inputMode={'date'} type={'datetime-local'} min={Date.now()}/>
-                            </FormGroup>) : (<div/>)}
+                        <FormGroup>
+                            <FormLabel>Location</FormLabel>
+                            <FormControl required value={location} placeholder={'search Existing Venue'} inputMode={'search'}
+                                         enterKeyHint={'go'} onChange={(e) => {setLocation(e.target.value)}}/>
+                            <FormText>Cant find the place? <small className={'text-primary'}> add new</small>
+                            </FormText>
+                        </FormGroup>
                         </Container>
                     </Col>
 
                     <Col sm={'12'} lg={'6'}>
-                        <Container fluid className={'p-3 rounded-4 bg-body-tertiary mt-3'}>
-                            <h6>Category</h6>
-                            <FormGroup>
-                                <FormControl required placeholder={'Category'} inputMode={'search'}
-                                             enterKeyHint={'go'} onChange={(e) => setCategory(e.target.value)}/>
-                                <FormText>Cant find the category? <small className={'text-primary'}> add new</small>
-                                </FormText>
-                            </FormGroup>
-                        </Container>
+
 
                     </Col >
                     <Col sm={'12'} lg={'6'}>
-                        <Container fluid className={'p-3 rounded-4 bg-body-tertiary mt-3'}>
-                            <h6>Location</h6>
-                            <FormGroup>
-                                <FormControl required value={location} placeholder={'search Existing Venue'} inputMode={'search'}
-                                             enterKeyHint={'go'} onChange={(e) => {setLocation(e.target.value)}}/>
-                                <FormText>Cant find the place? <small className={'text-primary'}> add new</small>
-                                </FormText>
-                            </FormGroup>
-                        </Container>
+
                     </Col>
                     <Col sm={'12'} lg={'6'}>
                         <Container fluid className={'p-3 rounded-4 bg-body-tertiary mt-3'}>
@@ -293,9 +260,9 @@ export default function EditEvent() {
                                 </thead>
                                 <tbody>
                                 {prices.map((_price,index) => (<tr key={index}>
-                                    <td>{_price.name}</td>
+                                    <td>{_price.ticketType}</td>
                                     <td>{_price.price}</td>
-                                    <td>{_price.count}</td>
+                                    <td>{_price.ticketsAvailable}</td>
                                     <td className={'text-danger'}><IoCloseOutline size={'20'}/></td>
                                 </tr>))}
                                 </tbody>

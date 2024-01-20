@@ -18,6 +18,8 @@ import SignIn from "./screens/login/SignIn";
 import SignUp from "./screens/login/SignUp";
 import ChangePassword from "./screens/login/ChangePassword";
 import VerifyEmail from "./screens/login/VerifyEmail";
+import {getEvent, selectCurrentId} from "./podo/SingleEventSlice";
+import Reservations from "./screens/reservations";
 
 
 
@@ -32,7 +34,7 @@ function FullLayout() {
     let history = useNavigate();
     const dispatch = useDispatch();
     const full = useSelector(selectFullState);
-
+   let id = useSelector(selectCurrentId)
     useEffect(() => {
 
         if (localStorage.getItem('user') === null) {
@@ -44,6 +46,13 @@ function FullLayout() {
             }
         }
     }, [history, full, dispatch])
+
+    useEffect(() => {
+        console.log('updating: ', id, '&& ', full)
+        if (id !== undefined || id !== '' ){
+            dispatch(getEvent(id))
+        }
+    },[id])
     return (<div className={'vh-100 bg-dark '}>
             <Container fluid className={'h-100'}>
                 <Row className={'h-100'}>
@@ -80,6 +89,7 @@ function Routed() {
                     <Route path={'/payouts'} element={<Payouts/>}/>
                     <Route path={'/profile'} element={<Profile/>}/>
                     <Route path={'/events/edit/:id'} element={<EditEvent/>}/>
+                    <Route path={'/events/reservations/:id'} element={<Reservations/>}/>
                 </Route>
             </Routes>
 

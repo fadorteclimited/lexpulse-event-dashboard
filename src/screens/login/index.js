@@ -1,14 +1,16 @@
 import React from 'react'
 import {
-    Col, Container, Modal, Row
+    Button,
+    Col, Container, Row
 } from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
 import LoginImage from '../../assets/reshot-0.png'
 import {Outlet} from 'react-router-dom'
 import Logo from '../../assets/logo.png'
 import LoadingScreen from "../../components/LoadingScreen";
-import {useSelector} from "react-redux";
-import {selectLoadingState} from "./LoginSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {resetErrorBlock, selectErrorBlock, selectLoadingState} from "./LoginSlice";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 
 export default function Login() {
@@ -16,6 +18,7 @@ export default function Login() {
     if (loading) {
         return (<Container fluid={'bg-dark mx-0 vh-100'}><LoadingScreen className={'vh-100'}/></Container> )
     } else return (<Container fluid className={'bg-dark mx-0 vh-100 '}>
+        <LoginError/>
         <Row>
             <Col className={'vh-100 verticalCenter text-white bg-dark overflow-y-auto'}>
                 <LinkContainer to={'/'}>
@@ -41,14 +44,17 @@ export default function Login() {
 
 
 
-export function LoginError({show,setShow,errorMessage}) {
+function LoginError() {
+    const dispatch = useDispatch();
+    const errorBlock = useSelector(selectErrorBlock)
 
-    return (<Modal show={show} className={'panel-warning alert-danger '} onHide={setShow.bind(this, false)}>
-        <Modal.Header className={'panel-heading alert-danger'} closeButton>
-            <Modal.Title>Error</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{errorMessage}</Modal.Body>
-    </Modal>)
+    return (<SweetAlert customClass={'bg-dark text-light rounded-4'} type={'danger'}
+                        onConfirm={dispatch.bind(this, resetErrorBlock())}
+                        title={'an Error Occurred'}
+
+                        show={errorBlock.show}
+                        custom={true}
+                        customButtons={<Button variant={'outline-primary'} onClick={dispatch.bind(this,resetErrorBlock())}>Close</Button> }>{errorBlock.message}</SweetAlert>)
 }
 // function CompleteProfile() {
 //     const [phone, setPhone] = useState();

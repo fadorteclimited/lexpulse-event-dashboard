@@ -10,74 +10,70 @@ import {
 } from "react-bootstrap";
 import {useParams} from "react-router";
 import {useEffect, useState} from "react";
-import {Events} from "../podo/events";
 import {IoEllipsisHorizontalOutline, IoShareOutline} from "react-icons/io5";
 import LoadingScreen from "../components/LoadingScreen";
 import {getRandomInt} from "../podo/utils";
 import {useNavigate} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {getEvent, selectFullState, selectLoadingState, updateId} from '../podo/SingleEventSlice'
+import {getEvent, selectEvent, selectSingleState, selectLoadingState, updateId} from '../podo/SingleEventSlice'
 
 export default function EventScreen() {
     let {id} = useParams();
     const dispatch = useDispatch();
-    const full = useSelector(selectFullState)
-    if (full.id !== id || full.value === null){
-        console.log(full)
-        dispatch(updateId(id))
-        dispatch(getEvent(id))
-    }
-    const [details, setDetails] = useState(null);
+    dispatch(updateId(id))
+    let full = useSelector(selectSingleState)
+
     const [date, setDate] = useState(Date.now());
-    const [unsold, setUnsold] = useState(0);
+    const [unSold, setUnsold] = useState(0);
     const [sold, setSold] = useState(0);
     let history = useNavigate();
-
+    const details = useSelector(selectEvent);
 
     useEffect(() => {
-        const filler = Events().at(0);
+        console.log(full)
+           if (details !== undefined){
+               if (details !== null){
 
-           if (!full.isLoading){
-               if (!full.hasError || full.value !== null){
-                   let _details = full.value.at(0);
-                   setDetails({
-                       ...filler,
-                       ..._details,
-                   })
-                   let _date = new Date(_details.eventDate);
+                   console.log(details)
+                   let _date = new Date(details.eventDate);
                    setDate(_date);
                    let count = 0;
                    let count2 = 0;
-                   for (let index in _details.ticketInfo) {
-                       count += _details.ticketInfo.at(index).ticketsLeft
-                       count2 += _details.ticketInfo.at(index).ticketsAvailable
+
+                   for (let index in details.ticketInfo) {
+                       count += details.ticketInfo.at(index).ticketsLeft
+                       count2 += details.ticketInfo.at(index).ticketsAvailable
                        setUnsold(count);
-                       setSold(count2 - count);
+                       setSold(count2 - count)
                    }
 
                    // setSoldTickets(getSoldTickets(dets.ticketInfo, _date))
                } else {
-                   history('/events')
+                   // history('/events')
                }
            }
 
+    }, [details]);
 
-    }, [full, history])
 
-    if (useSelector(selectLoadingState) || details === null) {
+
+    if (useSelector(selectLoadingState) || details === undefined || details === null) {
 
         return (<LoadingScreen className={'h-100'}/>)
     } else {
         let status;
         let variant;
-        if (details.approved){
-            status = 'Selling';
-            variant = 'success';
-        } else {
-            status = 'Reviewing';
-            variant = 'info';
-        }
+
+            if (details.approved){
+                status = 'Selling';
+                variant = 'success';
+            } else {
+                status = 'Reviewing';
+                variant = 'info';
+            }
+
+
 
         // const exportData = () => {
         //     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
@@ -102,16 +98,16 @@ export default function EventScreen() {
                                 <DropdownButton title={<IoEllipsisHorizontalOutline/>} menuVariant={'dark'} >
                                     <Dropdown.Item>Edit</Dropdown.Item>
                                     <Dropdown.Item><IoShareOutline/> Share</Dropdown.Item>
-                                    <Dropdown.Item>Visit</Dropdown.Item>
+                                    <Dropdown.Item>Reservations</Dropdown.Item>
                                 </DropdownButton>
                             </div>
                </span>
                         <div className={'ms-auto'}>
-                            <div className={'desktopOnly'}><LinkContainer to={`/edit/${id}`}>
+                            <div className={'desktopOnly'}><LinkContainer to={`/events/edit/${id}`}>
                                 <Button variant={'outline-primary'} >Edit</Button>
                             </LinkContainer>
                                 <Button className={'ms-2'} variant={'outline-primary'}><IoShareOutline/> Share</Button>
-                                <Button className={'ms-2'} variant={'primary'}>Visit</Button></div>
+                                <LinkContainer to={`/events/reservations/${id}`}><Button className={'ms-2'} variant={'primary'}>Reservations</Button></LinkContainer></div>
                         </div>
                     </div>
                 </div>
@@ -120,7 +116,7 @@ export default function EventScreen() {
                     <Row  md={'1'} sm={'1'} xs={'1'}>
                         <Col lg={'5'}>
                             <Container fluid className={'mt-3 rounded-4 w-100 ar-square p-0'}>
-                                <img src={details.image.at(0)} alt={details.eventName}
+                                <img src={details.image} alt={details.eventName}
                                      className={'ar-square w-100 object-fit-cover rounded-3'}/>
                             </Container>
                             <Container fluid className={'p-3 rounded-4 bg-body-tertiary mt-3 d-flex flex-column mb-3'}>
@@ -140,7 +136,7 @@ export default function EventScreen() {
                                             <span className={'d-flex flex-row justify-content-between'}><small
                                                 className={'fw-bold'}>Interested: </small>{getRandomInt(200)}</span>
                                             <span className={'d-flex flex-row justify-content-between'}><small
-                                                className={'fw-bold'}>Unsold Tickets: </small>{unsold}</span>
+                                                className={'fw-bold'}>Unsold Tickets: </small>{unSold}</span>
                                             <span className={'d-flex flex-row justify-content-between'}><small
                                                 className={'fw-bold'}>Status: </small><Badge className={' py-2'}
                                                                                              bg={variant}>{status}</Badge></span>
@@ -175,7 +171,8 @@ export default function EventScreen() {
                                     </thead>
                                     <tbody>
 
-                                    {details.ticketInfo.map((_price) => (<tr key={_price._id}>
+                                    {
+                                        details.ticketInfo.map((_price) => (<tr key={_price._id}>
                                         <td>{_price.ticketType}</td>
                                         <td>{details.currency} {_price.price.toFixed(2)}</td>
                                         <td>{_price.ticketsAvailable}</td>

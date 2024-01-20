@@ -27,53 +27,7 @@ export const Events = () => {
     return data;
 }
 
-export const getEvent2 = (id) => {
-    // let address = faker.location;
-    //
-    // let max = getRandomInt(3, 1)
-    // let prices = [];
-    // let totalTickets = 0;
-    // for (let i = 0; i<=max; i++){
-    //     let count = getRandomInt(400);
-    //     let sold = getRandomInt(count);
-    //     totalTickets= totalTickets + sold;
-    //     prices.push({
-    //         id: 0,
-    //         name: faker.company.buzzNoun(),
-    //         price: parseInt(faker.commerce.price({min: 0, max: 20})),
-    //         count: count,
-    //         sold: sold
-    //     })
-    // }
-    // return   {
-    //     id: id,
-    //     poster: faker.image.urlLoremFlickr({category: 'colorful'}),
-    //     name: faker.company.buzzAdjective(),
-    //     description: faker.lorem.paragraph(),
-    //     status: statuses.at(getRandomInt(statuses.length)),
-    //     genre: faker.music.genre(),
-    //     venue: {
-    //         id: 0,
-    //         name: faker.company.name(),
-    //         address: {
-    //             line1: address.street(),
-    //             line2: address.secondaryAddress(),
-    //             district: address.state(),
-    //             City: address.city(),
-    //             Country: address.country(),
-    //         },
-    //         mobile: faker.phone.number()
-    //     },
-    //     time: faker.date.soon({days: 5}),
-    //     date: faker.date.soon({days: 5}),
-    //     contact: faker.phone.number() ,
-    //     prices: prices,
-    //     interested: getRandomInt(totalTickets) + totalTickets,
-    //     sold: totalTickets,
-    // }
 
-    return data.filter(e => e.id === id);
-}
 
 export const getSoldTickets = (tickets, date) => {
 
@@ -118,38 +72,7 @@ export function getTransactions(num){
     return list
 }
 
-export async function getEvents() {
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
 
-    const config = {
-        headers: {
-            authorization: `Bearer ${token}`
-        },
-
-    }
-    let successObj;
-    let res = await axios.get(`${common.baseUrl}api/v1/events/user/${user.id}`,config).catch((e) => {
-
-        successObj = {
-            success: false,
-            status: e.response.status,
-            message: e.response.data.msg,
-        }
-    })
-
-    if (res !== undefined){
-        if (res.status === 200){
-            successObj = {
-                success: res.data.success,
-                status: res.status,
-                data: res.data.data,
-            }
-        }
-    }
-
-    return successObj;
-}
 export async function getEvent(id){
     const token = localStorage.getItem('token');
 
@@ -182,7 +105,7 @@ export async function getEvent(id){
 
     return successObj;
 }
-export async function handleUpload({name, location, category,currency, date, description, image, country, ticketInfo }){
+export async function handleUpload({name, location, category,currency, date, description, image, country, ticketInfo, update = false,eventId }){
 
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
@@ -204,23 +127,30 @@ export async function handleUpload({name, location, category,currency, date, des
     formData.append("description", description);
     formData.append("image", image );
     formData.append("country", country);
-    ticketInfo.forEach((ticket, index) => {
-        formData.append(`ticketInfo[${index}][ticketType]`, ticket.name);
-        formData.append(`ticketInfo[${index}][price]`, ticket.price);
-        formData.append(`ticketInfo[${index}][ticketsAvailable]`, ticket.count);
-        formData.append(`ticketInfo[${index}][ticketsLeft]`, ticket.count);
-    })
+
 
     let successObj;
-
-    let res = await axios.post(`${common.baseUrl}api/v1/events`, formData, config).catch((e) => {
-
+    let res;
+    try {
+        if (update){
+            res = await axios.patch(`${common.baseUrl}api/v1/events/${eventId}`, formData, config)
+        } else {
+            ticketInfo.forEach((ticket, index) => {
+                formData.append(`ticketInfo[${index}][ticketType]`, ticket.name);
+                formData.append(`ticketInfo[${index}][price]`, ticket.price);
+                formData.append(`ticketInfo[${index}][ticketsAvailable]`, ticket.count);
+                formData.append(`ticketInfo[${index}][ticketsLeft]`, ticket.count);
+            })
+            res = await axios.post(`${common.baseUrl}api/v1/events`, formData, config)
+        }
+    } catch (e) {
         successObj = {
             success: false,
             status: e.response.status,
             message: e.response.data.msg,
         }
-    })
+    }
+
 
     if (res !== undefined){
         if (res.status === 200){

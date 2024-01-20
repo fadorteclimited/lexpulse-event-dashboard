@@ -3,23 +3,19 @@ import {useLocation} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
 import {IoHomeOutline} from "react-icons/io5";
 import {useSelector} from "react-redux";
-import {selectFullState} from "../podo/SingleEventSlice";
+import {selectSingleState} from "../podo/SingleEventSlice";
 
 
 export default function Breadcrumbs() {
     const location = useLocation();
     const pathNames = location.pathname.split("/").filter((x) => x);
-    const full = useSelector(selectFullState)
+    const full = useSelector(selectSingleState)
     let eventDetails = null
     if (!full.isLoading){
         if (!full.hasError || full.value !== null ) {
-            if (full.value.length > 0){
-                eventDetails = full.value.at(0);
-            }
-
+                eventDetails = full.value;
     }
     }
-
     return (
         <Breadcrumb>
             {location.pathname === "/" ? null : <LinkContainer to="/"><Breadcrumb.Item className={'p'}><IoHomeOutline/></Breadcrumb.Item></LinkContainer>}
@@ -27,7 +23,7 @@ export default function Breadcrumbs() {
                 const last = index === pathNames.length - 1;
                 const to = `/${pathNames.slice(0, index + 1).join("/")}`;
                 if (last) {
-                    if (eventDetails !== null && value === eventDetails._id) {
+                    if (eventDetails !== undefined &&  eventDetails !== null && value === eventDetails._id) {
                         return (
                             <Breadcrumb.Item active key={to} className={'p'}>{ eventDetails.eventName}</Breadcrumb.Item>)
                     } else {
@@ -35,11 +31,13 @@ export default function Breadcrumbs() {
                     }
 
                 } else {
-                    return (
-                        <LinkContainer key={index} to={to}><Breadcrumb.Item
-                            className={'text-decoration-none'}>{value}</Breadcrumb.Item></LinkContainer>
+                    if (eventDetails !== undefined && eventDetails !== null && value === eventDetails._id) {
+                        return (
+                            <LinkContainer key={to} to={to}><Breadcrumb.Item  className={'text-decoration-none'}>{ eventDetails.eventName}</Breadcrumb.Item></LinkContainer>)
+                    } else {
+                        return (<LinkContainer key={to} to={to}><Breadcrumb.Item  className={'text-decoration-none'}>{value}</Breadcrumb.Item></LinkContainer>)
+                    }
 
-                    )
                 }
 
             })}

@@ -1,6 +1,7 @@
 import axios from "axios";
 import {common, createFile, getCountry} from "./utils";
 import Logo from '../assets/logo.png'
+import {redirect} from "react-router-dom";
 
 
 export async function signUpHost({firstName, lastName, email, pass}){
@@ -75,3 +76,26 @@ export async function SignInHost(email, pass){
     return successObj;
 }
 
+export async function getUser(id) {
+    try {
+        const token = localStorage.getItem('token');
+
+
+        const config = {
+            headers: {
+                authorization: `Bearer ${token}`
+            },
+
+        }
+        let res = await axios.get(`${common.baseUrl}api/v1/users/${id}`, config)
+        console.log(res)
+        return res.data.data.user
+    } catch (error) {
+        console.log(error)
+        if (error.response.status === 403){
+            localStorage.clear();
+            redirect('/login');
+        }
+
+    }
+}

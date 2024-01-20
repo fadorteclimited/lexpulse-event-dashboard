@@ -41,7 +41,7 @@ export default function Header() {
             }
         }
 
-    },[history])
+    },[history, dispatch, notify])
 
     const closeNotifications = () => setShowNotifications(false)
 

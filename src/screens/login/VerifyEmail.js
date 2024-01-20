@@ -1,27 +1,32 @@
 import {Button, Container, Form, FormControl, FormGroup, FormLabel} from "react-bootstrap";
 import React, {useState} from "react";
-import {LoginError} from "./index";
+
 import axios from "axios";
 import {common} from "../../podo/utils";
 import {useNavigate} from "react-router-dom";
+import {setErrorBlock} from "./LoginSlice";
+import {useDispatch} from "react-redux";
 
 
 export default function VerifyEmail() {
     const [email, setEmail] = useState('');
     const [code, setCode] = useState('');
-    const [show, setShow] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('0');
     let history = useNavigate();
+    const dispatch = useDispatch();
 
-    async function confirmCode (){
+    async function confirmCode (event){
+        event.preventDefault();
+        event.stopPropagation();
         const res = await axios.post(`${common.baseUrl}api/v1/auth/confirm-code`,{
             email: email,
             code: code,
         }).catch(
             (reason) =>{
                 console.log(reason);
-                setErrorMessage(reason.response.data.msg);
-                setShow(true);
+                dispatch(setErrorBlock({
+                    show: true,
+                    message: reason.response.data.msg
+                }))
             }
         );
         if (res !== undefined){
@@ -31,8 +36,7 @@ export default function VerifyEmail() {
         }
     }
     return (<Container>
-        <LoginError show={show} setShow={setShow} errorMessage={errorMessage}/>
-        <Form onSubmit={confirmCode.bind(this)}>
+        <Form onSubmit={confirmCode}>
             <FormGroup>
                 <FormLabel htmlFor="email1" className="mt-0">Email address</FormLabel>
                 <FormControl required type={'email'} value={email} className={'form-control-login'} id={'email1'}
