@@ -40,9 +40,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "env": {
-      "GENERATE_SOURCEMAP": false
-    },
+
     "extends": [
       "react-app",
       "react-app/jest"
