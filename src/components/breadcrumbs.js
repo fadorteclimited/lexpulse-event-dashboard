@@ -3,7 +3,7 @@ import {useLocation} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
 import {IoHomeOutline} from "react-icons/io5";
 import {useSelector} from "react-redux";
-import {selectSingleState} from "../podo/SingleEventSlice";
+import {selectSingleState} from "../screens/event/SingleEventSlice";
 
 
 export default function Breadcrumbs() {

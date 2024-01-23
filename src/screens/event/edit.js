@@ -12,13 +12,13 @@ import {
 import {IoCloseOutline, IoImageOutline} from "react-icons/io5";
 import {LinkContainer} from "react-router-bootstrap";
 import {useEffect, useRef, useState} from "react";
-import {handleUpload} from "../podo/events";
-import LoadingScreen from "../components/LoadingScreen";
+import {handleUpload} from "../../podo/events";
+import LoadingScreen from "../../components/LoadingScreen";
 import {useNavigate} from "react-router-dom";
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {getEvent, selectEvent, selectLoadingState, updateId} from "../podo/SingleEventSlice";
-import {getEvents} from "../podo/EventsSlice";
+import {getEvent, selectEvent, selectLoadingState, updateId} from "./SingleEventSlice";
+import {getEvents} from "../../podo/EventsSlice";
 
 
 
@@ -58,12 +58,6 @@ export default function EditEvent() {
 
                 let _date = new Date(details.eventDate);
                 setDate(_date);
-                let count = 0;
-                let count2 = 0;
-                for (let index in details.ticketInfo) {
-                    count += details.ticketInfo.at(index).ticketsLeft
-                    count2 += details.ticketInfo.at(index).ticketsAvailable
-                }
                 setPrices(details.ticketInfo)
         setDate(_date)
     }, [details])

@@ -1,11 +1,18 @@
-import {Modal} from "react-bootstrap";
+import {useDispatch, useSelector} from "react-redux";
+import {resetErrorBlock, selectErrorBlock} from "../screens/login/LoginSlice";
+import SweetAlert from "react-bootstrap-sweetalert";
+import {Button} from "react-bootstrap";
+import React from "react";
 
+export default function ErrorDisplay(){
+    const dispatch = useDispatch();
+    const errorBlock = useSelector(selectErrorBlock)
 
-export default function ErrorDisplay({title, message, show}){
-    return (<Modal show={show} className={'panel-warning'} >
-        <Modal.Header className={'panel-heading'} closeButton>
-            <Modal.Title>{title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{message}</Modal.Body>
-    </Modal>)
+    return (<SweetAlert customClass={'bg-dark text-light rounded-4'} type={'danger'}
+                        onConfirm={dispatch.bind(this, resetErrorBlock())}
+                        title={'an Error Occurred'}
+
+                        show={errorBlock.show}
+                        custom={true}
+                        customButtons={<Button variant={'outline-primary'} onClick={dispatch.bind(this,resetErrorBlock())}>Close</Button> }>{errorBlock.message}</SweetAlert>)
 }

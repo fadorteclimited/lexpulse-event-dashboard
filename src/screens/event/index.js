@@ -11,27 +11,24 @@ import {
 import {useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {IoEllipsisHorizontalOutline, IoShareOutline} from "react-icons/io5";
-import LoadingScreen from "../components/LoadingScreen";
-import {getRandomInt} from "../podo/utils";
-import {useNavigate} from "react-router-dom";
+import LoadingScreen from "../../components/LoadingScreen";
+import {getRandomInt} from "../../podo/utils";
 import {LinkContainer} from "react-router-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {getEvent, selectEvent, selectSingleState, selectLoadingState, updateId} from '../podo/SingleEventSlice'
+import {selectEvent, selectLoadingState, updateId} from './SingleEventSlice'
 
 export default function EventScreen() {
     let {id} = useParams();
     const dispatch = useDispatch();
     dispatch(updateId(id))
-    let full = useSelector(selectSingleState)
 
     const [date, setDate] = useState(Date.now());
     const [unSold, setUnsold] = useState(0);
     const [sold, setSold] = useState(0);
-    let history = useNavigate();
     const details = useSelector(selectEvent);
 
     useEffect(() => {
-        console.log(full)
+
            if (details !== undefined){
                if (details !== null){
 
@@ -49,8 +46,6 @@ export default function EventScreen() {
                    }
 
                    // setSoldTickets(getSoldTickets(dets.ticketInfo, _date))
-               } else {
-                   // history('/events')
                }
            }
 

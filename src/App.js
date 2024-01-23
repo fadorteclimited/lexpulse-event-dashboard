@@ -5,21 +5,21 @@ import {Col, Container, Row} from "react-bootstrap";
 import HomeScreen from "./screens/homeScreen";
 import {BrowserRouter, Outlet, Route, Routes, useNavigate} from "react-router-dom";
 import Payouts from "./screens/payouts";
-import NewEvent from "./screens/newEvent";
-import EventScreen from "./screens/eventScreen";
+import NewEvent from "./screens/event/new";
+import EventScreen from "./screens/event";
 import EventsScreen from "./screens/eventsScreen";
 import Login from "./screens/login";
 import {useEffect} from "react";
 import Profile from "./screens/profile";
-import EditEvent from "./screens/editEvent";
+import EditEvent from "./screens/event/edit";
 import {useDispatch, useSelector} from "react-redux";
 import {getEvents, selectFullState} from "./podo/EventsSlice";
 import SignIn from "./screens/login/SignIn";
 import SignUp from "./screens/login/SignUp";
 import ChangePassword from "./screens/login/ChangePassword";
 import VerifyEmail from "./screens/login/VerifyEmail";
-import {getEvent, selectCurrentId} from "./podo/SingleEventSlice";
-import Reservations from "./screens/reservations";
+import {getEvent, selectCurrentId} from "./screens/event/SingleEventSlice";
+import Reservations from "./screens/event/reservations";
 
 
 
@@ -48,11 +48,11 @@ function FullLayout() {
     }, [history, full, dispatch])
 
     useEffect(() => {
-        console.log('updating: ', id, '&& ', full)
+
         if (id !== undefined || id !== '' ){
             dispatch(getEvent(id))
         }
-    },[id])
+    },[id, dispatch])
     return (<div className={'vh-100 bg-dark '}>
             <Container fluid className={'h-100'}>
                 <Row className={'h-100'}>

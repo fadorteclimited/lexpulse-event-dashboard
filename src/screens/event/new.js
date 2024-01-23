@@ -12,9 +12,9 @@ import {
 import {IoCloseOutline, IoImageOutline} from "react-icons/io5";
 import {LinkContainer} from "react-router-bootstrap";
 import {useEffect, useRef, useState} from "react";
-import {handleUpload} from "../podo/events";
-import {serviceCountries} from "../podo/utils";
-import LoadingScreen from "../components/LoadingScreen";
+import {handleUpload} from "../../podo/events";
+import {serviceCountries} from "../../podo/utils";
+import LoadingScreen from "../../components/LoadingScreen";
 import {useNavigate} from "react-router-dom";
 
 

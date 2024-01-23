@@ -76,7 +76,7 @@ export async function SignInHost(email, pass){
     return successObj;
 }
 
-export async function getUser(id) {
+export async function getUserApi(id) {
     try {
         const token = localStorage.getItem('token');
 

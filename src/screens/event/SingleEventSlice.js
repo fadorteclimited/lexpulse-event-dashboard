@@ -1,7 +1,8 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
-import {common} from "./utils";
+import {common} from "../../podo/utils";
 import {redirect} from "react-router-dom";
+
 
 export const getEvent = createAsyncThunk('singleEvent/getEvent',
     async (id,{ rejectWithValue }) => {
@@ -63,13 +64,17 @@ const SingleEventSlice = createSlice({
         hasError: false,
         tickets: undefined,
         ticketsError: false,
-        ticketsLoading: false
+        ticketsLoading: false,
+        users: []
     }, reducers: {
         updateId: (state, action) => {
             if (state.id !== action.payload){
                 state.id = action.payload
                 state.tickets = undefined;
             }
+        },
+        addUser: (state, action) => {
+            state.users.push(action.payload)
         }
     },
     extraReducers: (builder) => {
@@ -89,7 +94,7 @@ const SingleEventSlice = createSlice({
                 state.hasError = true
                 state.isLoading = false;
                 state.value = undefined
-            }).addCase(getTickets.pending, (state,action) => {
+            }).addCase(getTickets.pending, (state) => {
                 state.ticketsLoading = true;
                 state.ticketsError = false;
         })
@@ -98,7 +103,7 @@ const SingleEventSlice = createSlice({
                 state.ticketsLoading = false;
                 state.ticketsError = false;
             })
-            .addCase(getTickets.rejected, (state,action) => {
+            .addCase(getTickets.rejected, (state) => {
                 state.ticketsLoading = false;
                 state.ticketsError = true;
             })
@@ -111,8 +116,9 @@ export const selectSingleState = state => state.singleEvent;
 export const selectCurrentId = state => state.singleEvent.id;
 export const selectTickets = state => state.singleEvent.tickets;
 export const selectTicketsLoading = state => state.singleEvent.ticketsLoading;
-export const selectTicketsError = state => state.singleEvent.ticketsError
+export const selectTicketsError = state => state.singleEvent.ticketsError;
+export const selectUsers = state => state.singleEvent.users;
 
 
-export const {updateId} = SingleEventSlice.actions
+export const {updateId,addUser} = SingleEventSlice.actions
 export default SingleEventSlice.reducer

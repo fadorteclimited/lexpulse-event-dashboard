@@ -21,7 +21,11 @@ export const getEvents = createAsyncThunk('eventsList/getEvents',
             localStorage.clear();
             redirect('/login');
         }
-        return [];
+        return {
+            status: error.response.status,
+            statusText: error.response.statusText,
+            message: error.response.data.toString()
+        };
     }
 })
 

@@ -1,7 +1,7 @@
 
 import { configureStore } from '@reduxjs/toolkit'
 import EventsReducer from "./podo/EventsSlice";
-import SingleEventReducer from "./podo/SingleEventSlice";
+import SingleEventReducer from "./screens/event/SingleEventSlice";
 import NotificationsReducer from "./podo/NotificationsSlice";
 import LoginReducer from "./screens/login/LoginSlice"
 
