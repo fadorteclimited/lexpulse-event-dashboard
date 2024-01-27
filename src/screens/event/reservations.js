@@ -1,4 +1,4 @@
-import {Badge, Button, Container, Image, Table} from "react-bootstrap";
+import {Badge, Button, Col, Container, Image, Row, Table} from "react-bootstrap";
 import {IoDocumentOutline} from "react-icons/io5";
 import {dateReader} from "../../podo/utils";
 import {useDispatch, useSelector} from "react-redux";
@@ -46,7 +46,7 @@ export default function Reservations() {
                     </div>
                 </div>
 
-                <Table>
+                <Table responsive>
                     <thead>
                     <tr>
                         <th scope="col"><strong>#</strong></th>
@@ -71,16 +71,18 @@ export default function Reservations() {
                             show={show}
                             custom={true}
                             customButtons={<Button variant={'outline-primary'} onClick={setShow.bind(this,false)}>Close</Button>}>
-                    <span className={'d-flex flex-row'}>
-                        <Image className={'ar-square bg-danger object-fit-cover'} src={ticketInfo.user.image} height={150} width={150} roundedCircle style={{
-                            objectPosition: 'center'
-                        }}/>
-                        <div className={'verticalCenter ms-2'}>
-                            <h5>{ticketInfo.user.firstName}  {ticketInfo.user.lastName}</h5>
-                        <h6>{ticketInfo.user.email}</h6>
-                        <p>Total: {details.currency}<small className={'text-primary'}>{ticketInfo.ticket.totalPrice}</small> </p>
-                        </div>
-                    </span>
+                    <Row className={'mb-3 gy-3'}>
+                       <Col>
+                           <Image className={'ar-square bg-danger object-fit-cover'} src={ticketInfo.user.image} height={100} width={100} roundedCircle style={{
+                               objectPosition: 'center'
+                           }}/>
+                       </Col>
+                        <Col className={'verticalCenter ms-4 text-md-start text-sm-center'}>
+                            <h6>{ticketInfo.user.firstName}  {ticketInfo.user.lastName}</h6>
+                        <p>{ticketInfo.user.email}</p>
+                        <p>Total: {details.currency}<small className={'fw-bold ms-1 text-primary p'}>{ticketInfo.ticket.totalPrice}</small> </p>
+                        </Col>
+                    </Row>
                     <Table variant={'dark'} size={'sm'}>
                         <thead>
                         <tr>
@@ -141,7 +143,7 @@ function TicketRow({item, index, setInfo, setShow, currency}) {
     }
     return (<tr key={item._id} onClick={showTicket.bind(this)}>
         <td>{index + 1}</td>
-        <td><span><Image className={'me-1 object-fit-cover bg-danger ar-square'} style={{maxHeight: '35px'}}
+        <td><span><Image className={'me-1 object-fit-cover ar-square'} style={{height: '35px'}}
                            src={user.image} alt={'avatar'} roundedCircle/>{user.firstName} {user.lastName}</span></td>
         <td>{purchased}</td>
         <td>{dateReader({date: item.createdAt})}</td>

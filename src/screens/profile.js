@@ -1,10 +1,11 @@
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import {Button, Col, Container, Form, FormControl, FormGroup, FormLabel, FormText, Row} from "react-bootstrap";
 import {faker} from "@faker-js/faker";
 import {IoLogoTiktok} from "react-icons/io5";
 import {AiOutlineCalendar, AiOutlineFacebook, AiOutlineInstagram, AiOutlineTwitter} from "react-icons/ai";
-import {getRandomInt} from "../podo/utils";
+import {getRandomInt, serviceCountries} from "../podo/utils";
 import {RxDividerVertical} from "react-icons/rx";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+import {LinkContainer} from "react-router-bootstrap";
 
 function PublicInfo(){
     const profile = {
@@ -60,10 +61,63 @@ function PublicInfo(){
             <Form.Label>Tiktok profile:</Form.Label>
             <Form.Control className={'form-control-login'} placeholder={'username'}/>
         </Form.Group>
+        <Form.Group className={'mt-3'}>
+            <Button variant={'primary'} type={'submit'}>Confirm</Button>
+        </Form.Group>
     </Form>)
 }
 
+function PrivateInfo() {
+    const service= serviceCountries();
+    const [email, setEmail] = useState('');
+    const [fName, setFName] = useState('');
+    const [lName, setLName] = useState('');
+    const [country, setCountry] = useState('');
+    const [countryIndex, setCountryIndex] = useState(0);
+    const [gender, setGender] = useState('')
+    return (<Form className={'mt-3'}>
+        <FormGroup>
+            <Row>
+                <Col>
+                    <FormLabel className="mt-3">First Name</FormLabel>
+                    <FormControl required className={'form-control-login'} id='firstNameId'
+                                 placeholder='First Name'
+                                 onChange={(e) => setFName(e.target.value)}/>
 
+                </Col>
+                <Col>
+                    <FormLabel className="mt-3">Last Name</FormLabel>
+                    <FormControl required className={'form-control-login'} id='lastNameId'
+                                 placeholder='Last Name'
+                                 onChange={(e) => setLName(e.target.value)}/>
+                </Col>
+            </Row>
+        </FormGroup>
+
+        <FormGroup>
+            <FormLabel htmlFor="exampleInputEmail1" className="mt-3">Email address</FormLabel>
+            <FormControl autoComplete={'username'} required type={'email'} className={'form-control-login'} id={'Email1'}
+                         placeholder={'Enter Email'} onChange={(e) => setEmail(e.target.value)}/>
+        </FormGroup>
+        <FormGroup className={'mt-3'}>
+            <FormLabel htmlFor={''}>Gender</FormLabel>
+            <FormControl autoComplete={'gender'} className={'form-control-login'} id={'gender'} placeholder={'Gender'}
+                         onChange={(e) => setGender(e.target.value)}/>
+        </FormGroup>
+        <FormGroup className={'mt-3'}>
+            <FormLabel htmlFor={''}>Country</FormLabel>
+            <Form.Select value={countryIndex} onChange={(e) => {setCountryIndex(e.target.value); console.log(e.target)}}>
+                {service.map((_serve, index) => (<option value={index}>{_serve.name}</option>))}
+            </Form.Select>
+        </FormGroup>
+        <FormGroup className={'mt-3'}>
+            <Button variant={'primary'} type={'button'}>Change Password</Button>
+        </FormGroup>
+       <FormGroup className={'mt-3'}>
+           <Button variant={'primary'} type={'submit'}>Confirm</Button>
+       </FormGroup>
+    </Form>)
+}
 
 export default function Profile() {
     const [profile,setProfile] = useState({
@@ -113,7 +167,7 @@ export default function Profile() {
                                 <Button variant={'link'}><AiOutlineFacebook size={30}/></Button>
                                 <Button variant={'link'}><IoLogoTiktok size={30}/></Button>
                             </span>
-                        <div className={'mt-auto'}>
+                        <div className={'mt-auto mt-sm-3'}>
                                 <span className={'d-flex flex-row flex-fill justify-content-between'}>
                                 <h6 className={'text-dark'}>{profile.followers} <small className={'text-body-secondary'}>Followers</small></h6>
                                 <RxDividerVertical size={30}/>
@@ -132,7 +186,7 @@ export default function Profile() {
             </Container>
         </div>
         <Container fluid className={'py-3 px-0'}>
-            <Row>
+            <Row className={'gy-3'}>
                 <Col>
                     <Container className={'rounded-4 bg-body-tertiary p-3'}>
                         <h6 className={'fw-bold'}>Public Info</h6>
@@ -143,7 +197,7 @@ export default function Profile() {
                 <Col>
                     <Container className={'rounded-4 bg-body-tertiary p-3'}>
                         <h6 className={'fw-bold'}>Profile Information </h6>
-
+                        <PrivateInfo/>
                     </Container>
                 </Col>
             </Row>

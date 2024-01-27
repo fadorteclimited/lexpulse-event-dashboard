@@ -91,9 +91,9 @@ export default function EventScreen() {
                    <div className={'ms-2 verticalCenter desktopOnly'}><Button size={'sm'} variant={'outline-secondary'}>{details.category}</Button></div>
                      <div className={'mobileOnly ms-auto'}>
                                 <DropdownButton title={<IoEllipsisHorizontalOutline/>} menuVariant={'dark'} >
-                                    <Dropdown.Item>Edit</Dropdown.Item>
+                                    <LinkContainer to={`/events/edit/${id}`}><Dropdown.Item>Edit</Dropdown.Item></LinkContainer>
                                     <Dropdown.Item><IoShareOutline/> Share</Dropdown.Item>
-                                    <Dropdown.Item>Reservations</Dropdown.Item>
+                                    <LinkContainer to={`/events/reservations/${id}`}><Dropdown.Item>Reservations</Dropdown.Item></LinkContainer>
                                 </DropdownButton>
                             </div>
                </span>
