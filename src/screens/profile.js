@@ -1,11 +1,10 @@
-import {Button, Col, Container, Form, FormControl, FormGroup, FormLabel, FormText, Row} from "react-bootstrap";
+import {Button, Col, Container, Form, FormControl, FormGroup, FormLabel, Row} from "react-bootstrap";
 import {faker} from "@faker-js/faker";
 import {IoLogoTiktok} from "react-icons/io5";
 import {AiOutlineCalendar, AiOutlineFacebook, AiOutlineInstagram, AiOutlineTwitter} from "react-icons/ai";
 import {getRandomInt, serviceCountries} from "../podo/utils";
 import {RxDividerVertical} from "react-icons/rx";
 import React, {useEffect, useState} from "react";
-import {LinkContainer} from "react-router-bootstrap";
 
 function PublicInfo(){
     const profile = {
@@ -24,7 +23,7 @@ function PublicInfo(){
     return (<Form className={'mt-3'}>
         <Form.Group className={'mt-3'}>
             <Form.Label>Organization</Form.Label>
-            <Form.Control className={'form-control-login '} placeholder={'Organization name'}/>
+            <Form.Control className={'form-control-custom'} placeholder={'Organization name'}/>
         </Form.Group>
         <Form.Group className={'mt-3'}>
             <Form.Label>Avatar</Form.Label>
@@ -41,25 +40,25 @@ function PublicInfo(){
         </Form.Group>
         <Form.Group className={'mt-3'}>
             <Form.Label>About</Form.Label>
-            <Form.Control as={'textarea'} rows={5} className={'form-control-login'} placeholder={'Short description about your organization'}/>
+            <Form.Control as={'textarea'} rows={5} className={'form-control-custom'} placeholder={'Short description about your organization'}/>
         </Form.Group>
 
         <p className={'fw-semibold text-body-secondary mt-4 mb-0'}>Links to your social media</p>
         <Form.Group className={'mt-1'}>
             <Form.Label>Twitter handle</Form.Label>
-            <Form.Control className={'form-control-login'} placeholder={'username'}/>
+            <Form.Control className={'form-control-custom'} placeholder={'username'}/>
         </Form.Group>
         <Form.Group className={'mt-3'}>
             <Form.Label>Instagram profile</Form.Label>
-            <Form.Control  className={'form-control-login'} placeholder={'username'}/>
+            <Form.Control  className={'form-control-custom'} placeholder={'username'}/>
         </Form.Group>
         <Form.Group className={'mt-3'}>
             <Form.Label>Facebook profile</Form.Label>
-            <Form.Control  className={'form-control-login'} placeholder={'username'}/>
+            <Form.Control  className={'form-control-custom'} placeholder={'username'}/>
         </Form.Group>
         <Form.Group className={'mt-3'}>
             <Form.Label>Tiktok profile:</Form.Label>
-            <Form.Control className={'form-control-login'} placeholder={'username'}/>
+            <Form.Control className={'form-control-custom'} placeholder={'username'}/>
         </Form.Group>
         <Form.Group className={'mt-3'}>
             <Button variant={'primary'} type={'submit'}>Confirm</Button>
@@ -68,26 +67,28 @@ function PublicInfo(){
 }
 
 function PrivateInfo() {
+    let profile = JSON.parse(localStorage.getItem('user'))
     const service= serviceCountries();
-    const [email, setEmail] = useState('');
-    const [fName, setFName] = useState('');
-    const [lName, setLName] = useState('');
-    const [country, setCountry] = useState('');
-    const [countryIndex, setCountryIndex] = useState(0);
-    const [gender, setGender] = useState('')
+    const [email, setEmail] = useState(profile.email);
+    const [fName, setFName] = useState(profile.firstName);
+    const [lName, setLName] = useState(profile.lastName);
+    const [country, setCountry] = useState(profile.country);
+    const [countryIndex, setCountryIndex] = useState(service.findLastIndex((value) => value.name === country));
+    const [gender, setGender] = useState(profile.gender)
+    useEffect(() => setCountry(service.at(countryIndex)), [countryIndex])
     return (<Form className={'mt-3'}>
         <FormGroup>
             <Row>
                 <Col>
                     <FormLabel className="mt-3">First Name</FormLabel>
-                    <FormControl required className={'form-control-login'} id='firstNameId'
+                    <FormControl value={fName} required className={'form-control-custom'} id='firstNameId'
                                  placeholder='First Name'
                                  onChange={(e) => setFName(e.target.value)}/>
 
                 </Col>
                 <Col>
                     <FormLabel className="mt-3">Last Name</FormLabel>
-                    <FormControl required className={'form-control-login'} id='lastNameId'
+                    <FormControl value={lName} required className={'form-control-custom'} id='lastNameId'
                                  placeholder='Last Name'
                                  onChange={(e) => setLName(e.target.value)}/>
                 </Col>
@@ -96,12 +97,12 @@ function PrivateInfo() {
 
         <FormGroup>
             <FormLabel htmlFor="exampleInputEmail1" className="mt-3">Email address</FormLabel>
-            <FormControl autoComplete={'username'} required type={'email'} className={'form-control-login'} id={'Email1'}
+            <FormControl value={email} autoComplete={'username'} required type={'email'} className={'form-control-custom'} id={'Email1'}
                          placeholder={'Enter Email'} onChange={(e) => setEmail(e.target.value)}/>
         </FormGroup>
         <FormGroup className={'mt-3'}>
             <FormLabel htmlFor={''}>Gender</FormLabel>
-            <FormControl autoComplete={'gender'} className={'form-control-login'} id={'gender'} placeholder={'Gender'}
+            <FormControl value={gender} autoComplete={'gender'} className={'form-control-custom'} id={'gender'} placeholder={'Gender'}
                          onChange={(e) => setGender(e.target.value)}/>
         </FormGroup>
         <FormGroup className={'mt-3'}>

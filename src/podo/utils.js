@@ -71,7 +71,7 @@ export async function getCountry() {
 }
 
 export function serviceCountries() {
-    let list = ['KE', 'GH', 'UK']
+    let list = ['KE', 'GH', 'UK','CY']
     return list.map((e) => countries[e])
 }
 

@@ -2,7 +2,6 @@ import {
     Button, Image, Nav, Navbar, NavbarCollapse, NavbarOffcanvas, NavItem, NavLink, Offcanvas
 } from "react-bootstrap";
 import {
-    IoChatboxEllipsesOutline,
     IoGridOutline,
     IoListOutline,
     IoLogOutOutline,
@@ -71,11 +70,11 @@ export default function Header() {
                         <IoNotificationsOutline size={18}/>
                     </Button>
                 </NavItem>
-                <NavItem className={'mx-0'}>
-                    <Button  variant={'dark'}>
-                        <IoChatboxEllipsesOutline size={18}/>
-                    </Button>
-                </NavItem>
+                {/*<NavItem className={'mx-0'}>*/}
+                {/*    <Button  variant={'dark'}>*/}
+                {/*        <IoChatboxEllipsesOutline size={18}/>*/}
+                {/*    </Button>*/}
+                {/*</NavItem>*/}
                 <NavItem className={'mx-0 '}>
                   <LinkContainer to={'/profile'} exact>
                       <NavLink> <span>{navProfile.firstName} {navProfile.lastName}

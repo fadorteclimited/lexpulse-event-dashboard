@@ -30,7 +30,7 @@ export default function HomeScreen() {
     if (useSelector(selectLoadingState)){
         return (<LoadingScreen className={'h-100'}/>)
     } else return (<Container fluid className={''}>
-        <Container fluid className={'mt-3'}>
+        <Container fluid className={'mt-3 px-0'}>
             <Row lg={'4'} md={'2'} sm={'1'} xs={'1'} className={'gy-3 h-100 justify-content-around'}>
                 <Col className={'d-flex'}><HomeScreenItem title={'Your Balance'}
                                                              subtitle={'$15,000'}
@@ -53,24 +53,40 @@ export default function HomeScreen() {
 
             </Row>
         </Container>
-        <Container fluid className={'mt-3 rounded-4 bg-body p-md-3 p-sm-0 h-100'}>
+        <Container fluid className={'mt-3 rounded-4 bg-body py-3 px-md-3 px-sm-0 h-100'}>
             <h4 className={'text-primary'}>Earnings</h4>
             <div className={'ar-chart'}><LineChart/></div>
         </Container>
 
-        {(events.length >= 1)? <FeaturedEvent eventDetails={events.at(0)}/> : <div></div>}
-        <Container fluid className={' my-3 py-3 bg-body rounded-4 text-primary'}>
+        {(events.length >= 1)? <div>
+            <FeaturedEvent eventDetails={events.at(0)}/>
+            <Container fluid className={' my-3 py-3 bg-body rounded-4 text-primary'}>
+                <div className={'d-flex flex-row justify-content-between px-2 mb-3'}>
+                    <h4>Your Events</h4>
+                    <LinkContainer to={'/events/new'}>
+                        <Button variant={'outline-primary'}>Create New</Button>
+                    </LinkContainer>
+
+                </div>
+                <Row className={'gy-3'}>
+                    {events.map((event, index) => (<Col key={index} md={'4'}><Poster eventDetails={event}/></Col>))}
+                </Row>
+            </Container>
+        </div> : <Container fluid className={' my-3 py-3 bg-body rounded-4'}>
             <div className={'d-flex flex-row justify-content-between px-2 mb-3'}>
-                <h4>Your Events</h4>
-                <LinkContainer to={'/events/new'}>
-                    <Button variant={'outline-primary'}>Create New</Button>
-                </LinkContainer>
+                <h4 className={'text-primary'}>Your Events</h4>
+
 
             </div>
-            <Row className={'gy-3'}>
-                {events.map((event, index) => (<Col key={index} md={'4'}><Poster eventDetails={event}/></Col>))}
-            </Row>
-        </Container>
+           <div className={'text-center my-5 py-5'}>
+               <h4>No events</h4>
+               <p className={'text-primary'}>Create your first Event</p>
+               <LinkContainer to={'/events/new'}>
+                   <Button variant={'outline-primary'}>Create New</Button>
+               </LinkContainer>
+           </div>
+        </Container>}
+
 
     </Container>)
 }

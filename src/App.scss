@@ -34,8 +34,7 @@ $breadcrumb-active-color: $gray-600;
   background-color: #0000;
   line-height: 1.5;
   box-shadow: none;
-color: white;
-
+  color: white;
 }
 .form-control-login:disabled{
   background-color: $gray-300;
@@ -44,6 +43,21 @@ color: white;
 .form-control-login:focus{
   background-color: #0000;
   color: white;
+}
+
+.form-control-custom{
+  background-color: #0000;
+  line-height: 1.5;
+  box-shadow: none;
+  color: black;
+}
+.form-control-custom:disabled{
+  background-color: $gray-300;
+}
+
+.form-control-custom:focus{
+  background-color: #0000;
+  color: black;
 }
 
 .common-bg {
