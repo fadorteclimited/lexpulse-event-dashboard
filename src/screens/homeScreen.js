@@ -8,6 +8,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import {useSelector} from "react-redux";
 import {selectEvents, selectLoadingState} from "../podo/EventsSlice";
 import {getRandomInt} from "../podo/utils";
+import {IoIosCash} from "react-icons/io";
 
 export function HomeScreenItem({title, subtitle, icon, bg='primary'}) {
 
@@ -132,9 +133,6 @@ function FeaturedEvent({eventDetails}){
             <span className={'d-flex flex-row'}><h4 className={'text-primary'}>Featured Event </h4>
                 <div className={'ms-2'}><Badge className={'py-2'}
                             bg={variant}>{status}</Badge></div></span>
-            <LinkContainer className={'desktopOnly'} to={'/events/new'}>
-                <Button variant={'outline-primary'}>Create New</Button>
-            </LinkContainer>
         </div>
         <Row lg={'auto'} md={'1'} sm={'1'} xs={'1'} className={'gy-3'}>
             <Col lg={'8'}>
@@ -175,9 +173,9 @@ function FeaturedEvent({eventDetails}){
                                                               icon={<IoTicket
                                                                   className={'h-100 w-100'} />} bg={'danger'}/>
                     </Col>
-                    <Col className={'d-flex'}> <HomeScreenItem title={'Visitors'}
-                                                               subtitle={getRandomInt(100)}
-                                                               icon={<IoPeople size={25}
+                    <Col className={'d-flex'}> <HomeScreenItem title={'Income'}
+                                                               subtitle={`${eventDetails.currency} ${getRandomInt(1000)}`}
+                                                               icon={<IoIosCash size={25}
                                                                                className={'h-100 w-100 '}/>}/>
                     </Col>
 

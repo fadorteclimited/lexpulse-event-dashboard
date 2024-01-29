@@ -7,19 +7,7 @@ import {RxDividerVertical} from "react-icons/rx";
 import React, {useEffect, useState} from "react";
 
 function PublicInfo(){
-    const profile = {
-        id: getRandomInt(300),
-        firstName: faker.person.firstName(),
-        lastName: faker.person.lastName(),
-        image: faker.image.avatar(),
-        companyName: faker.company.buzzNoun(),
-        dateJoined: faker.date.past({years: 1}),
-        cover: faker.image.urlLoremFlickr({category: 'colorful'}),
-        email: faker.internet.email(),
-        followers: getRandomInt(2000),
-        totalEvents: getRandomInt(50),
-        description: faker.lorem.sentences(5)
-    }
+    let profile = JSON.parse(localStorage.getItem('user'))
     return (<Form className={'mt-3'}>
         <Form.Group className={'mt-3'}>
             <Form.Label>Organization</Form.Label>
@@ -28,7 +16,7 @@ function PublicInfo(){
         <Form.Group className={'mt-3'}>
             <Form.Label>Avatar</Form.Label>
            <div className={'border-1 border d-flex flex-row rounded-3'}>
-               <img src={profile.image} alt={'current'} height={100}/>
+               <img src={profile.image} alt={'current'} className={'border-1 border'} height={100}/>
                <div className={'justify-content-center d-flex flex-column ps-3'}>
                    <p className={'mb-0 text-body-secondary'}>JPG, GIF or PNG. Max size of 700KB</p>
                    <div className={'d-flex flex-row'}>
