@@ -20,6 +20,7 @@ import ChangePassword from "./screens/login/ChangePassword";
 import VerifyEmail from "./screens/login/VerifyEmail";
 import {getEvent, selectCurrentId} from "./screens/event/SingleEventSlice";
 import Reservations from "./screens/event/reservations";
+import {getDashboardItems} from "./podo/DashboardSlice";
 
 
 
@@ -53,6 +54,9 @@ function FullLayout() {
             dispatch(getEvent(id))
         }
     },[id, dispatch])
+    useEffect(() => {
+        dispatch(getDashboardItems())
+    },[dispatch])
     return (<div className={'vh-100 bg-dark '}>
             <Container fluid className={'h-100'}>
                 <Row className={'h-100'}>

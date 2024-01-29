@@ -22,6 +22,8 @@ export const getNotifications = createAsyncThunk('notificationList/get',
             if (error.response.status === 403 || error.response.status === 401){
                 localStorage.clear();
                 redirect('/login');
+            } else if (error.response.status === 404){
+                return [];
             }
             return [];
         }

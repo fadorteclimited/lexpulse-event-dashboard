@@ -1,5 +1,5 @@
 import {Badge, Button, Col, Container, Image, Row, Table} from "react-bootstrap";
-import {IoDocumentOutline} from "react-icons/io5";
+import {IoDocumentOutline, IoShareOutline} from "react-icons/io5";
 import {dateReader} from "../../podo/utils";
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -36,6 +36,26 @@ export default function Reservations() {
 
     if (useSelector(selectTicketsLoading) || soldTickets === undefined || details === undefined) {
         return (<LoadingScreen className={'h-100'}/>)
+    } else if (soldTickets.length === 0){
+        return (<div className={'px-2'}>
+            <Container className={'p-3 rounded-4 bg-body-tertiary mt-3 w-100'}>
+                <div className={'d-md-flex flex-row mb-0 '}>
+                    <h3 className={'text-primary'}>Reservations</h3>
+                    <div className={'ms-auto d-flex flex-row'}>
+                        <Button className={'ms-2'} variant={'outline-primary'}><IoDocumentOutline/> Print</Button>
+                    </div>
+                </div>
+            <Container className={'text-center my-5 py-5'}>
+                <h5>No reservations</h5>
+                <p className={'mb-0'}>No purchases made yet.</p>
+                <p> Here you would see who has purchased a ticket</p>
+                <span>
+                    <Button variant={'outline-primary'}><IoShareOutline/> Share</Button>
+                </span>
+            </Container>
+            </Container>
+        </div>)
+
     } else {
         return (<div className={'px-2'}>
             <Container className={'p-3 rounded-4 bg-body-tertiary mt-3 w-100'}>

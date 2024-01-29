@@ -5,10 +5,11 @@ import Poster from "../components/poster";
 import {IoCardOutline, IoCartOutline, IoPeople, IoTicket} from "react-icons/io5";
 import {LinkContainer} from "react-router-bootstrap";
 import LoadingScreen from "../components/LoadingScreen";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectEvents, selectLoadingState} from "../podo/EventsSlice";
 import {getRandomInt} from "../podo/utils";
 import {IoIosCash} from "react-icons/io";
+import {getDashboardItems, selectDashboardStats} from "../podo/DashboardSlice";
 
 export function HomeScreenItem({title, subtitle, icon, bg='primary'}) {
 
@@ -28,10 +29,12 @@ export default function HomeScreen() {
 
     const events = useSelector(selectEvents)
 
+
     if (useSelector(selectLoadingState)){
         return (<LoadingScreen className={'h-100'}/>)
     } else return (<Container fluid className={''}>
         <Container fluid className={'mt-3 px-0'}>
+
             <Row lg={'4'} md={'2'} sm={'1'} xs={'1'} className={'gy-3 h-100 justify-content-around'}>
                 <Col className={'d-flex'}><HomeScreenItem title={'Your Balance'}
                                                              subtitle={'$15,000'}

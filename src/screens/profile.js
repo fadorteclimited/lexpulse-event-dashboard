@@ -5,6 +5,8 @@ import {AiOutlineCalendar, AiOutlineFacebook, AiOutlineInstagram, AiOutlineTwitt
 import {getRandomInt, serviceCountries} from "../podo/utils";
 import {RxDividerVertical} from "react-icons/rx";
 import React, {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import {selectDashboardStats} from "../podo/DashboardSlice";
 
 function PublicInfo(){
     let profile = JSON.parse(localStorage.getItem('user'))
@@ -118,20 +120,15 @@ export default function Profile() {
         dateJoined: faker.date.past({years: 1}),
         cover: faker.image.urlLoremFlickr({category: 'colorful'}),
         email: faker.internet.email(),
-        followers: getRandomInt(2000),
-        totalEvents: getRandomInt(50),
         description: faker.lorem.sentences(5)
     })
-
+    const stats = useSelector(selectDashboardStats)
     useEffect(() => {
             let prof = JSON.parse(localStorage.getItem('user'))
+
             setProfile({
                 companyName: faker.company.buzzNoun(),
-                dateJoined: faker.date.past({years: 1}),
-                cover: faker.image.urlLoremFlickr({category: 'colorful'}),
-                email: faker.internet.email(),
-                followers: getRandomInt(2000),
-                totalEvents: getRandomInt(50),
+
                 description: faker.lorem.sentences(5),
                 ...prof
             })
@@ -158,11 +155,9 @@ export default function Profile() {
                             </span>
                         <div className={'mt-auto mt-sm-3'}>
                                 <span className={'d-flex flex-row flex-fill justify-content-between'}>
-                                <h6 className={'text-dark'}>{profile.followers} <small className={'text-body-secondary'}>Followers</small></h6>
+                                <h6 className={'text-dark'}>{stats.followers} <small className={'text-body-secondary'}>Followers</small></h6>
                                 <RxDividerVertical size={30}/>
-                                <h6 className={'text-dark'}>{profile.totalEvents} <small className={'text-body-secondary'}>Events</small></h6>
-                                    <RxDividerVertical size={30}/>
-                                    <h6 className={'text-dark'}><AiOutlineCalendar size={19}/> 6 <small className={'text-body-secondary'}>months</small></h6>
+                                <h6 className={'text-dark'}>{stats.events} <small className={'text-body-secondary'}>Events</small></h6>
                             </span>
                         </div>
 
