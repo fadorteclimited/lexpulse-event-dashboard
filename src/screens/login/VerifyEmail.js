@@ -4,12 +4,13 @@ import React, {useState} from "react";
 import axios from "axios";
 import {common} from "../../podo/utils";
 import {useNavigate} from "react-router-dom";
-import {setErrorBlock} from "./LoginSlice";
-import {useDispatch} from "react-redux";
+import {selectEmail, setErrorBlock} from "./LoginSlice";
+import {useDispatch, useSelector} from "react-redux";
 
 
 export default function VerifyEmail() {
-    const [email, setEmail] = useState('');
+    const localEmail = useSelector(selectEmail)
+    const [email, setEmail] = useState(localEmail);
     const [code, setCode] = useState('');
     let history = useNavigate();
     const dispatch = useDispatch();

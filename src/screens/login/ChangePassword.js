@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {selectEmail, setErrorBlock} from "./LoginSlice";
+import {requestCode, selectEmail, setErrorBlock} from "./LoginSlice";
 import {Button, Container, Form, FormControl, FormGroup, FormLabel} from "react-bootstrap";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -68,7 +68,8 @@ export default function ChangePassword() {
                              placeholder="Password" onChange={(e) => setPass2(e.target.value)}/>
             </FormGroup>
             <FormGroup className={'mt-4'}>
-                <Button type={'submit'} className={'w-100'} variant={'primary'}>Confirm</Button>
+                <Button type={'submit'} variant={'primary'}>Confirm</Button>
+                <Button type={'button'} className={'ms-2'} variant={'outline-primary'} onClick={requestCode.bind(this,email)}>Request Code</Button>
             </FormGroup>
         </Form>
     </Container>)

@@ -1,12 +1,14 @@
 import {Button, Col, Container, Form, FormControl, FormGroup, FormLabel, Row} from "react-bootstrap";
 import {faker} from "@faker-js/faker";
 import {IoLogoTiktok} from "react-icons/io5";
-import {AiOutlineCalendar, AiOutlineFacebook, AiOutlineInstagram, AiOutlineTwitter} from "react-icons/ai";
+import {AiOutlineFacebook, AiOutlineInstagram, AiOutlineTwitter} from "react-icons/ai";
 import {getRandomInt, serviceCountries} from "../podo/utils";
 import {RxDividerVertical} from "react-icons/rx";
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {selectDashboardStats} from "../podo/DashboardSlice";
+import {requestCode} from "./login/LoginSlice";
+import {useNavigate} from "react-router-dom";
 
 function PublicInfo(){
     let profile = JSON.parse(localStorage.getItem('user'))
@@ -65,7 +67,12 @@ function PrivateInfo() {
     const [country, setCountry] = useState(profile.country);
     const [countryIndex, setCountryIndex] = useState(service.findLastIndex((value) => value.name === country));
     const [gender, setGender] = useState(profile.gender)
+    let history = useNavigate();
     useEffect(() => setCountry(service.at(countryIndex)), [countryIndex])
+    async function handleChangePassword() {
+        await requestCode(profile.email);
+        history('/update-pass')
+    }
     return (<Form className={'mt-3'}>
         <FormGroup>
             <Row>
@@ -102,7 +109,7 @@ function PrivateInfo() {
             </Form.Select>
         </FormGroup>
         <FormGroup className={'mt-3'}>
-            <Button variant={'primary'} type={'button'}>Change Password</Button>
+            <Button onClick={handleChangePassword.bind(this)} variant={'primary'} type={'button'}>Change Password</Button>
         </FormGroup>
        <FormGroup className={'mt-3'}>
            <Button variant={'primary'} type={'submit'}>Confirm</Button>

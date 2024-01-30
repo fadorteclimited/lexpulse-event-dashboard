@@ -1,6 +1,21 @@
 import {createSlice} from "@reduxjs/toolkit";
+import axios from "axios";
+import {common} from "../../podo/utils";
 
+export async function requestCode (email)  {
 
+        const raw = JSON.stringify({
+            email: email,
+        });
+        const config = {
+            headers: {
+                'content-type': 'application/json'
+            },
+            data: raw
+        }
+        let res = await axios.get(`${common.baseUrl}api/v1/auth/reset-password}`,config);
+        return res.data;
+}
 const LoginSlice = createSlice({
     name: 'login',
     initialState: {
@@ -17,12 +32,13 @@ const LoginSlice = createSlice({
         setLoading: (state, action) => {state.isLoading = action.payload},
         setEmail: (state, action) => {state.email = action.payload},
         setErrorBlock: (state, action) => {state.errorBlock = action.payload},
-        resetErrorBlock: (state, action) => {state.errorBlock = {
+        resetErrorBlock: (state) => {state.errorBlock = {
             show: false,
             message: '0'
         }},
     }
 });
+
 
 export const selectLoadingState = state => state.login.isLoading;
 export const selectEmail = state => state.login.email;
